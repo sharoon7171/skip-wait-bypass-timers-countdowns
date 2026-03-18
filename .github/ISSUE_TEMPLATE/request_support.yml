@@ -1,6 +1,6 @@
 name: Request a website
 description: Ask to add support for a website that shows a countdown or wait page
-title: "[Request] "
+title: "Add support: "
 labels: ["request-support"]
 body:
   - type: input

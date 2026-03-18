@@ -1,19 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "Skip Wait",
-  "version": "1.4",
-  "description": "Skip countdown timers and waiting pages. One-click bypass for link shorteners and file hosts.",
+  "name": "Skip Wait — Bypass Timers & Countdowns",
+  "version": "1.4.0",
+  "description": "Bypass countdown timers and skip waiting pages. Instant access on link shorteners and file hosts—no wait, one click.",
   "icons": {
-    "16": "icons/icon.png",
-    "48": "icons/icon.png",
-    "128": "icons/icon.png"
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   },
   "action": {
     "default_icon": {
-      "16": "icons/icon.png",
-      "48": "icons/icon.png",
-      "128": "icons/icon.png"
-    }
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "default_popup": "popup.html"
   },
   "permissions": ["scripting"],
   "host_permissions": ["<all_urls>"],
