@@ -1,0 +1,33 @@
+name: Request a website
+description: Ask to add support for a website that shows a countdown or wait page
+title: "[Request] "
+labels: ["request-support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us the website and what you see so we can add support.
+  - type: input
+    id: website
+    attributes:
+      label: Website or link
+      description: Domain or full URL where you see the countdown or wait page.
+      placeholder: https://example.com or example.com
+    validations:
+      required: true
+  - type: textarea
+    id: flow
+    attributes:
+      label: What happens when you visit?
+      description: Describe the steps so we can reproduce (e.g. countdown, click Continue, then timer).
+      placeholder: |
+        e.g. I open the link, then a 10 second countdown appears. Then I see the real page.
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Optional — browser, Skip Wait version, or other details.
+    validations:
+      required: false
