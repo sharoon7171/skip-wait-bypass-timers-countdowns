@@ -1,0 +1,27 @@
+{
+  "name": "skip-wait",
+  "version": "1.4",
+  "description": "Skip countdown timers and waiting pages. Get instant access to download links and content. No more waiting—one-click bypass for link shorteners and file hosts.",
+  "type": "module",
+  "scripts": {
+    "dev": "VITE_DEV_WATCH=1 vite build --watch & sleep 2 && vite build --config vite.content.config.ts --watch",
+    "build": "tsc -b && vite build && vite build --config vite.content.config.ts",
+    "build:zip": "bash scripts/build-zip.sh",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "terser": "^5.46.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "@vitejs/plugin-react": "^4.3.4"
+  }
+}
