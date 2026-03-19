@@ -1,15 +1,17 @@
 import { isAllowedHost } from '../utils/domain-check';
-import { isRecaptchaVerified, RECAPTCHA_RESPONSE_SELECTOR } from '../utils/recaptcha-verifier';
+import { hasCaptchaToken } from '../utils/captcha-verifier';
 
 const ALLOWED_HOSTS = ['adfly.site', 'demo-adlinkfly.themeson.com'];
+
+const RECAPTCHA_NAMES = ['g-recaptcha-response'];
 
 const isRealUrl = (s: string): boolean =>
   s.startsWith('http://') || s.startsWith('https://');
 
 function onCaptchaPage(form: HTMLFormElement): void {
-  if (!form.querySelector(RECAPTCHA_RESPONSE_SELECTOR)) return;
+  if (!form.querySelector('[name="g-recaptcha-response"]')) return;
   const tick = (): void => {
-    if (isRecaptchaVerified(form)) form.submit();
+    if (hasCaptchaToken(form, RECAPTCHA_NAMES)) form.submit();
     else requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
