@@ -98,6 +98,7 @@ import { bypass as playmodsBypass } from './bypasses/playmods-bypass';
 import { bypass as plingOpendesktopBypass } from './bypasses/pling-opendesktop-bypass';
 import { bypass as prmoviesBypass } from './bypasses/prmovies-bypass';
 import { bypass as pwxBypass } from './bypasses/pwx-bypass';
+import { bypass as rareStudyBypass } from './bypasses/rare-study-bypass';
 import { bypass as reshortflyBypass } from './bypasses/reshortfly-bypass';
 import { bypass as rinkuBypass } from './bypasses/rinku-bypass';
 import { bypass as romsfunBypass } from './bypasses/romsfun-bypass';
@@ -244,6 +245,7 @@ export const bypasses: readonly SupportedBypass[] = [
   plingOpendesktopBypass,
   prmoviesBypass,
   pwxBypass,
+  rareStudyBypass,
   reshortflyBypass,
   rinkuBypass,
   romsfunBypass,
