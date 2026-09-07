@@ -68,6 +68,7 @@ import { initLlSafelinkHqChain, initLlacDdx } from '../sites/ll-safelink';
 import { initCloverhubGetkey } from '../sites/cloverhub';
 import { initLootlabsCaptchaFrame, initLootlabsUnlock } from '../sites/lootlabs';
 import { initMolynPage } from '../sites/molyn';
+import { initMovies4uLandingRedirect } from '../sites/movies4u/landing-redirect';
 import { initMoviesModContentScript } from '../sites/movies-mod';
 import { initOnhaxpkCopy } from '../sites/onhaxpk';
 import { initOnlinetoolsDirectDownload } from '../sites/onlinetools';
@@ -178,6 +179,7 @@ const INITS = [
   initWorkinkGate,
   initCloverhubGetkey,
   initMolynPage,
+  initMovies4uLandingRedirect,
   initLootlabsUnlock,
   initLlSafelinkHqChain,
   initLlacDdx,

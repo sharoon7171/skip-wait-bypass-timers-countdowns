@@ -322,6 +322,9 @@
   "movies-mod": {
     "hosts": ["episodes.modpro.blog", "links.modpro.blog", "leechpro.blog"]
   },
+  "movies4u": {
+    "hosts": ["1movies4u.cc"]
+  },
   "move2link-blog": {
     "hosts": ["siendu.com"]
   },
