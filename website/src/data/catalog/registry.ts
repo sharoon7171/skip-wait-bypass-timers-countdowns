@@ -78,6 +78,7 @@ import { bypass as moddroidBypass } from './bypasses/moddroid-bypass';
 import { bypass as modsmaniacBypass } from './bypasses/modsmaniac-bypass';
 import { bypass as molynBypass } from './bypasses/molyn-bypass';
 import { bypass as move2linkBypass } from './bypasses/move2link-bypass';
+import { bypass as movies4uBypass } from './bypasses/movies4u-bypass';
 import { bypass as moviesmodBypass } from './bypasses/moviesmod-bypass';
 import { bypass as mp4uploadBypass } from './bypasses/mp4upload-bypass';
 import { bypass as muhammadniazBypass } from './bypasses/muhammadniaz-bypass';
@@ -222,6 +223,7 @@ export const bypasses: readonly SupportedBypass[] = [
   modsmaniacBypass,
   molynBypass,
   move2linkBypass,
+  movies4uBypass,
   moviesmodBypass,
   mp4uploadBypass,
   muhammadniazBypass,
