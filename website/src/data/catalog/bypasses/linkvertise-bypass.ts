@@ -30,7 +30,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'A Linkvertise bypass or linkvertise access bypass usually means stacked ad tasks and access steps before any download URL or copied payload appears. Skip Wait is the $1.50/month Chrome extension that works through those access screens and finishes with a redirect or clipboard result when the page releases it.';
+  'A Linkvertise bypass or linkvertise access bypass usually means stacked ad tasks and access steps before any download URL or copied payload appears. Skip Wait is the Chrome extension that works through those access screens and finishes with a redirect or clipboard result when the page releases it.';
 
 const body = `## Access steps that feel like a checklist, not a redirect
 
@@ -50,7 +50,7 @@ The friction is the task list—linkvertise skip and linkvertise waiting page de
 
 Skip Wait runs on supported Linkvertise and partner unlock pages. It completes supported access tasks, clears client-only wait busywork, and either redirects to the final link or copies the result content when that is what the page returns.
 
-When Linkvertise shows its long free-wait countdown—including a linkvertise 1 hour wait—Skip Wait keeps that timer visible and explains the free path forward: use a VPN or restart your router so your network address changes, then open the link again.
+When Linkvertise shows its long free-wait countdown—including a linkvertise 1 hour wait—Skip Wait keeps that timer visible and explains the free path forward: use a VPN or restart your router so your network address changes, then open the link again. Skip Wait does not clear that wait with proxy IPs or cached destinations.
 
 You open the share as usual—no paste into a third-party bypasser. Steps the locker still enforces finish before the payload releases.
 
@@ -68,7 +68,7 @@ const faq: readonly BypassFaq[] = [
   {
     question: 'What if Linkvertise shows a long free wait or 1 hour wait?',
     answer:
-      'That wait is tied to your current network address. Skip Wait cannot remove it. Use a VPN or restart your router so your IP changes, then open the link again and continue with free ads.',
+      'That wait is tied to your current network address. Use a VPN or restart your router so your IP changes, then open the link again and continue with free ads. Skip Wait does not clear it with proxy IPs or cached destinations.',
   },
   {
     question: 'Does it copy result text when there is no redirect?',
@@ -83,12 +83,7 @@ const faq: readonly BypassFaq[] = [
   {
     question: 'Is every wait removed instantly?',
     answer:
-      'Client-only delay chrome goes away. A long free wait Linkvertise ties to your network still needs a new IP or waiting it out before free unlock continues.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
+      'Client-only delay chrome goes away. A long free wait Linkvertise ties to your network still needs a new IP or waiting it out. Proxy IPs and cached destinations are not used to clear it.',
   },
 ];
 
