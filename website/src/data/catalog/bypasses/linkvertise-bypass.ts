@@ -5,7 +5,7 @@ const name = 'Linkvertise';
 const bypassType = 'Skip Access Steps';
 
 const description =
-  'Linkvertise bypass that completes supported ad tasks and access steps, clears wait timers, and opens the final URL or copies result content when that is what the page returns.';
+  'Linkvertise bypass clears ad tasks and access-step waits so Skip Wait opens the final URL or copies result text when the page releases it.';
 
 const domains = ['linkvertise.com', 'beta.luadefender.xyz'] as const;
 
@@ -17,6 +17,7 @@ const keywords = [
   'skip linkvertise',
   'linkvertise skip',
   'linkvertise timer bypass',
+  'linkvertise 1 hour wait',
   'linkvertise waiting page',
   'linkvertise access bypass',
   'luadefender bypass',
@@ -29,38 +30,45 @@ const keywords = [
 ] as const;
 
 const intro =
-  'People searching a Linkvertise bypass or linkvertise access bypass usually hit stacked ad tasks and access steps before any download URL or copied payload appears. Skip Wait is the Chrome extension that works through those access screens and finishes with a redirect or clipboard result when the page releases it.';
+  'A Linkvertise bypass or linkvertise access bypass usually means stacked ad tasks and access steps before any download URL or copied payload appears. Skip Wait is the $1.50/month Chrome extension that works through those access screens and finishes with a redirect or clipboard result when the page releases it.';
 
 const body = `## Access steps that feel like a checklist, not a redirect
 
 A Linkvertise monetized link rarely opens the destination in one hop. You complete ad tasks, survive access-step waits, then finally get either a final URL or result text to copy. Leave mid-flow and the checklist restarts.
 
-That is why linkvertise skip and linkvertise waiting page searches sit next to skip access steps—the friction is the task list, not a single interstitial.
+The friction is the task list—linkvertise skip and linkvertise waiting page delays—not a single interstitial.
 
 ### What usually stands between you and the payload
 
 - Ad tasks on monetized unlock pages
 - Access-step wait screens before continue enables
+- A long free wait tied to your network when Linkvertise starts that countdown
 - Manual retries when a task tab closes early
 - Result text that needs copying when there is no redirect
 
 ## Completing access inside Chrome
 
-Skip Wait runs on supported Linkvertise and partner unlock pages. It completes supported access tasks, bypasses wait-timer busywork, and either redirects to the final link or copies the result content when that is what the page returns.
+Skip Wait runs on supported Linkvertise and partner unlock pages. It completes supported access tasks, clears client-only wait busywork, and either redirects to the final link or copies the result content when that is what the page returns.
 
-You open the share as usual—no paste into a third-party bypasser. Client-only clutter gets out of the way; steps the locker still requires finish honestly.
+When Linkvertise shows its long free-wait countdown—including a linkvertise 1 hour wait—Skip Wait keeps that timer visible and explains the free path forward: use a VPN or restart your router so your network address changes, then open the link again.
+
+You open the share as usual—no paste into a third-party bypasser. Steps the locker still enforces finish before the payload releases.
 
 ## Why “just paste the URL” ages poorly
 
 Access layouts and partner hosts change while the task pattern stays familiar. A Linkvertise bypass chrome install that runs on the live access page keeps working without relearning a new paste site every time the checklist UI shuffles.
 `;
 
-
 const faq: readonly BypassFaq[] = [
   {
     question: 'What does a Linkvertise bypass skip?',
     answer:
       'Supported ad tasks and access-step wait busywork so you reach the final download URL or copied content without babysitting every screen.',
+  },
+  {
+    question: 'What if Linkvertise shows a long free wait or 1 hour wait?',
+    answer:
+      'That wait is tied to your current network address. Skip Wait cannot remove it. Use a VPN or restart your router so your IP changes, then open the link again and continue with free ads.',
   },
   {
     question: 'Does it copy result text when there is no redirect?',
@@ -75,7 +83,7 @@ const faq: readonly BypassFaq[] = [
   {
     question: 'Is every wait removed instantly?',
     answer:
-      'Client-only delay chrome goes away. Steps the locker still enforces finish before the payload releases.',
+      'Client-only delay chrome goes away. A long free wait Linkvertise ties to your network still needs a new IP or waiting it out before free unlock continues.',
   },
   {
     question: 'Do I need a license?',
