@@ -20,7 +20,7 @@ const NOTE = {
 
 const WAIT_NOTE = {
   detail:
-    'Linkvertise blocked free unlock on your current IP with a long wait. Use a VPN or restart your router so your IP changes, then open this link again.',
+    'Linkvertise blocked free unlock on your current IP with a long wait. Use a VPN or restart your router so your IP changes, then open this link again. Skip Wait could clear this wait faster with proxy IPs and cached destinations if enough users bought premium—right now that cost isn’t covered, so those options aren’t available.',
 } as const;
 
 let ui: FullPageOverlay | null = null;
