@@ -15,7 +15,7 @@ const BLOCKED_EVENTS = [
 ] as const;
 
 export type FullPageOverlayNote = {
-  lead: string;
+  lead?: string;
   detail?: string;
 };
 
@@ -42,10 +42,12 @@ export type FullPageOverlay = {
 
 function fillNote(el: HTMLElement, note: FullPageOverlayNote): void {
   el.replaceChildren();
-  const lead = document.createElement('div');
-  lead.className = overlayClasses.noteLead;
-  lead.textContent = note.lead;
-  el.appendChild(lead);
+  if (note.lead) {
+    const lead = document.createElement('div');
+    lead.className = overlayClasses.noteLead;
+    lead.textContent = note.lead;
+    el.appendChild(lead);
+  }
   if (note.detail) {
     const detail = document.createElement('div');
     detail.className = overlayClasses.noteDetail;
