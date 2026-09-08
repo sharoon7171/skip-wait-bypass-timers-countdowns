@@ -77,11 +77,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Supported torrent controls follow the same unlock path—click once and let Skip Wait clear the intermediary wait.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

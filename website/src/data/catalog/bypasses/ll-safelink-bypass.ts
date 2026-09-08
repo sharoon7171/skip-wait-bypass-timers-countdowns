@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes for the supported unlock pattern. Skip Wait follows how the pages behave, so a new intermediate host in the same flow does not require a third-party paste tool.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -65,11 +65,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'If the waiting-page pattern is the same, the extension follows live behavior. You do not paste the URL into a third-party tool when mediators rotate.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -69,11 +69,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'The button tour and consent overlays are skipped on your side. If WeaDown still needs a short server hold, Skip Wait continues as soon as that hold clears.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

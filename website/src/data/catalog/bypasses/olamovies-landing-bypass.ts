@@ -73,11 +73,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. This page is only the portal hop into the catalog. Human check and Verify to generate link are covered on the separate Link Generator bypass page.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

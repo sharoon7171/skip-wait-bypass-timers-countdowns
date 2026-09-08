@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client-only countdown chrome goes away. When the host still needs a real hold, Skip Wait stays until unlock is allowed, then continues.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

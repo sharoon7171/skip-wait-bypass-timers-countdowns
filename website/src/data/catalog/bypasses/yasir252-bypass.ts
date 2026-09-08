@@ -71,11 +71,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No on supported flows. Skip Wait fetches the direct link and starts the file path when the host allows it.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

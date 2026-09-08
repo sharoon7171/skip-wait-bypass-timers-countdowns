@@ -69,11 +69,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'CloverHub issues 24-hour access keys after verification. Skip Wait does not change the expiry—only how fast you reach the issued key.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -77,11 +77,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client busywork and continue loops go away. Timers the network still enforces server-side are waited honestly before redirect.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

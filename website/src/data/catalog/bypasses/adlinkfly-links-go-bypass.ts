@@ -87,11 +87,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. If captcha appears, Skip Wait pins it on the overlay. Supported Links Go waiting pages do not need a userscript.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

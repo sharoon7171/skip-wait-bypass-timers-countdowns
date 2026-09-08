@@ -93,11 +93,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Aggressive blockers can trigger AdBlocker detected modals on intermediate pages. Allow the shortener and that page for the session if progress stalls, then reload.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

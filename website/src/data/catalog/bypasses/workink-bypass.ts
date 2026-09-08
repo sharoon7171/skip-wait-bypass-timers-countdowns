@@ -69,11 +69,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'A publisher login session can block free-path unlock. Log out of that publisher session, then open the short link again.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

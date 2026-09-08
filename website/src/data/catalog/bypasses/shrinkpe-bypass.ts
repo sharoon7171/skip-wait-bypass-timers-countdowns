@@ -79,11 +79,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. You see when wait pages are being skipped, when each hop clears, when Almost Ready is counting down, and when the destination is opening—without tapping Continue on blog tabs.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

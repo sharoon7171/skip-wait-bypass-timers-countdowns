@@ -69,11 +69,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. You click download on Softpedia as usual. The extension works on that page.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

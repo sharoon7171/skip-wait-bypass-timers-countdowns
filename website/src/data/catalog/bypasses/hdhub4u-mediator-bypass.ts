@@ -85,11 +85,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'If the gate pattern matches and the host is supported, Skip Wait follows live page behavior. You do not need a third-party paste tool for covered hosts.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -73,11 +73,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Click Here returns whatever the publisher stored—another page, another shortener, or a file host. This bypass stops when that URL opens.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

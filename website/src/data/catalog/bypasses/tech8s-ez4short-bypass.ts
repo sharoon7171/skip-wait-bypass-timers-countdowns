@@ -105,11 +105,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes on supported pages. After Tech8s / Ez4Short gates, Skip Wait clears the Droplink Get Link countdown on the unlock tab you reach.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

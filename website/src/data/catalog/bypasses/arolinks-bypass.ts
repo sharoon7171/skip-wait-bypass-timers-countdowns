@@ -80,11 +80,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'That is separate from the countdown. Complete or clear the check in the tab, then reload the short link so Skip Wait can run the Arolinks unlock bypass again.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

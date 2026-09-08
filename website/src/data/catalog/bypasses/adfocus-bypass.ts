@@ -76,11 +76,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'AdFocus is usually a single interstitial. Skip Wait focuses on that gate; stacked blog networks are covered on their own catalog pages.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -74,11 +74,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Related locker family, different action loop. Boostellar / Bstshrt focuses on countdown gates; BoostyLink also automates stacked locker actions.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

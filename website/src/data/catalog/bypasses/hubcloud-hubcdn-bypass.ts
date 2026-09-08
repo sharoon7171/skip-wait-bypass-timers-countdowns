@@ -89,11 +89,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Waiting-page busywork goes away. When the host still gates release on a later page, that path still applies there.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

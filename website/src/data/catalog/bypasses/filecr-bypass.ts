@@ -65,11 +65,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Intermediary redirect pages, download generating timers, and extra wait screens on mirror-style buttons after the click.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

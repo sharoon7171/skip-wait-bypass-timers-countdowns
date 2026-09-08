@@ -95,11 +95,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Rinku rotates intermediate article hosts between shares. Skip Wait follows the unlock pattern on those hops instead of depending on one fixed blog domain list. Stay on the tab for supported pages.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

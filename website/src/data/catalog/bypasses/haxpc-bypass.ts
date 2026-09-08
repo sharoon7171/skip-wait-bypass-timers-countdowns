@@ -77,11 +77,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Use the same UI. Skip Wait resolves the real URL behind the click.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

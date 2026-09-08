@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. The extension runs on the page you opened. That is a waiting page bypass in Chrome, not a third-party paste site.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -61,11 +61,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes on supported paths. Extra wait screens on mirror and host buttons are bypassed so the file opens from the button you pressed.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

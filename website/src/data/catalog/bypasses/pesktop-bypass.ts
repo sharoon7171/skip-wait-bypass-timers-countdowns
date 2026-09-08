@@ -62,11 +62,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'On supported flows, Skip Wait handles the wait that follows the download control you already use, including common mirror hops.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

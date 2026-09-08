@@ -68,11 +68,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client-only redirect waits are cleared. Brief server handshakes still finish—so the pling / opendesktop timer bypass stays reliable.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -76,11 +76,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Filler wait chrome goes away when the links are present. Required holds still finish before mirrors unlock if the page enforces them.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

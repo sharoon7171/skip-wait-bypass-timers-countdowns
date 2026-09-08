@@ -78,11 +78,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes when those hosts are supported and follow the same unlock pattern. Open the share as usual; Skip Wait runs on matching pages.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

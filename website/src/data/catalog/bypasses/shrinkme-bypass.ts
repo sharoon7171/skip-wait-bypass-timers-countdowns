@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Client-only delays and button hunting go away. When unlock still needs a real wait, Skip Wait stays on that step, then continues.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -60,11 +60,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client-only delays go away. If the host still needs a brief hold, Skip Wait finishes it, then continues—so the mp4upload timer bypass stays reliable.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

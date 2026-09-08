@@ -79,11 +79,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes on the listed mirror domains that use the same generate.php mediator. Domains outside that list are not covered until added.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

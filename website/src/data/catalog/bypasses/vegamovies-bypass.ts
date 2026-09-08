@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Open the hub and Quick Access as usual. Skip Wait only removes the connecting wait behind those links.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

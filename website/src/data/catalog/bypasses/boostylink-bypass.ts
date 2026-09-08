@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. BoostyLink often stacks locker actions with the timer. Skip Wait automates both the taps and the wait choreography.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

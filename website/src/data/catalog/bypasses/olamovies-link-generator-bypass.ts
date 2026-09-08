@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. When ready, it shows an href you open yourself so navigation stays intentional.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

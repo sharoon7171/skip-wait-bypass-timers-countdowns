@@ -74,11 +74,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Skip Wait holds the auto posts that send you there and unlocks from the file page itself.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -97,11 +97,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. The extension prepares the link and waits. You choose when to press Direct Download.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -69,11 +69,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. This entry covers the homepage landing wait. Mediator please-wait pages after download clicks are a separate path.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

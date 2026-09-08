@@ -68,11 +68,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. The extension works on the page you opened. That is a countdown timer bypass in Chrome, not a third-party decoder.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

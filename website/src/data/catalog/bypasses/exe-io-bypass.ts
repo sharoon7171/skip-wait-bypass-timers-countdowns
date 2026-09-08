@@ -82,11 +82,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes on supported pages. Open the shared alias normally; matching mirror hosts use the same bypass path.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

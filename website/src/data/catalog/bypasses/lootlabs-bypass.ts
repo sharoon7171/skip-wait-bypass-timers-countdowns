@@ -101,11 +101,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Keep the tab open with Skip Wait active on a supported locker host and it redirects when the link becomes available.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -64,11 +64,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Skip Wait still targets the destination on the /st URL when that value is present, so a blocked hop UI does not have to succeed first.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Click the same control; Skip Wait handles the wait and intermediary screen behind it.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

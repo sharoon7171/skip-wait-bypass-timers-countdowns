@@ -79,11 +79,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'On supported pages, no. Skip Wait advances continue and blog wait steps so ads do not hide the control you were meant to press.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -77,11 +77,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Whatever URL Get Link returns for that alias. Skip Wait’s LiteShort path stops when that URL opens.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

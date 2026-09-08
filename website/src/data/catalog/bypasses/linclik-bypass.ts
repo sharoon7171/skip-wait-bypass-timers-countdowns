@@ -73,11 +73,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client-only delays go away. When unlock still needs a real wait, Skip Wait stays until it is allowed—so the linclik countdown bypass stays stable.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Client-only delays go away. If the shortener still enforces a real wait, Skip Wait stays on that step until unlock is allowed.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

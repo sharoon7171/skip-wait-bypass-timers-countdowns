@@ -71,11 +71,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'If you reload mid-gate you may restart the free path. Stay on the tab while the extension finishes the supported unlock.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

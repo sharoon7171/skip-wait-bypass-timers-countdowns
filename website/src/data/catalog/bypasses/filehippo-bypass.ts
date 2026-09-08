@@ -66,11 +66,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Skip Wait fetches the real link after your download click; it does not pick a different mirror for you.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

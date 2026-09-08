@@ -81,11 +81,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Cuty often blocks unlock when an adblocker is active and restarts the flow after the timer. Pause your blocker for Cuty, reload, and the destination can open.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

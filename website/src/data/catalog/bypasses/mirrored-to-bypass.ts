@@ -86,11 +86,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. It unlocks the list and clears the short URL hop. You still choose which mirror Download button to use.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

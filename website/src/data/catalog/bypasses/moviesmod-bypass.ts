@@ -70,11 +70,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Leave Skip Wait enabled and open the post as usual. Timed-reveal support runs on matching pages automatically.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

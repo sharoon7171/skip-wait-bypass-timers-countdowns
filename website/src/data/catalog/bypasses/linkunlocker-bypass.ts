@@ -76,11 +76,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'On supported flows, Skip Wait advances past get-link delay screens so you are not babysitting the disabled button.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

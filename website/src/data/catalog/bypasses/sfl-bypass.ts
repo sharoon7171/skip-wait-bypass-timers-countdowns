@@ -84,11 +84,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Front delays and Continue hunting go away. If unlock still needs a real hold, Skip Wait respects it, then continues so the sfl timer bypass stays reliable.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

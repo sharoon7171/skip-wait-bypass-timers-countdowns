@@ -71,11 +71,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Not for Skip Wait’s redirect path on supported pages. The extension does not require you to complete each subscribe or like step when the destination is already on the page.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

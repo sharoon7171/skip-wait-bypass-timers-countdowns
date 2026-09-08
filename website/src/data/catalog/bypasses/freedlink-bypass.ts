@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. This entry is the Normal Download free path only—not the Free Premium ads session.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

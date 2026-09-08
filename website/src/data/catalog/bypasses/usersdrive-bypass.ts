@@ -71,11 +71,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes on supported flows. Mediator popups on download click stay out of the way while the branded button uses the real CDN URL.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

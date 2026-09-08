@@ -66,11 +66,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'On supported hops, Skip Wait completes that flow so you are not hunting buttons through ads.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

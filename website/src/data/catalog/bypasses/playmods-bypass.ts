@@ -115,11 +115,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Stay on the post, history list, all-versions, all-download, or download waiting page and let the PlayMods bypass extension run on that tab.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

@@ -84,11 +84,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Do I need a paste tool for the APK link?',
     answer: 'No. The extension unlocks the download control on the page you already opened.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

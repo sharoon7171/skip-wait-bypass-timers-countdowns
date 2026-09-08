@@ -74,11 +74,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'No. Open the short link in Chrome with Skip Wait enabled and stay on that tab.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

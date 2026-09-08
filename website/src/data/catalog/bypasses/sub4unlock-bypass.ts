@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'This entry targets multi-slot checklists and password gates. Sub2Unlock focuses on YouTube-first social blocks on its own host.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

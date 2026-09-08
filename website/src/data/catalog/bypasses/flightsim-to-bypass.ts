@@ -60,11 +60,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Yes. Trigger download the normal way. Skip Wait handles the timed dialog behind that click.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {

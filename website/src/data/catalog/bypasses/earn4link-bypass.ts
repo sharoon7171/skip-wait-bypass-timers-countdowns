@@ -99,11 +99,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'It tries immediately. Cosmetic countdowns do not block you. If the server rejects early Get Link, Skip Wait waits the enforced delay once, then retries.',
   },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
-  },
 ];
 
 export const bypass = {
