@@ -82,11 +82,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Related, not identical. This page is for the PWX Unlock 24 Hours / Generate Key gate. Arolinks has its own page for the short-link stages themselves.',
   },
-  {
-    question: 'Is Skip Wait free?',
-    answer:
-      'You get 5 free bypasses per day, a 30-minute unlimited free trial, or a $1.50/month license key for unlimited use. Activate a trial or key in the extension popup.',
-  },
 ];
 
 export const bypass = {

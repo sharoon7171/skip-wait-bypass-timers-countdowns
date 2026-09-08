@@ -77,11 +77,6 @@ const faq: readonly BypassFaq[] = [
     answer:
       'Full Rare Study access for the next twenty-four hours, then a short Redirecting to rarestudy into the batches area.',
   },
-  {
-    question: 'Is Skip Wait free?',
-    answer:
-      'You get 5 free bypasses per day, a 30-minute unlimited free trial, or a $1.50/month license key for unlimited use. Activate a trial or key in the extension popup.',
-  },
 ];
 
 export const bypass = {
