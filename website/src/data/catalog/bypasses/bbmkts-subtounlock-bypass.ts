@@ -45,7 +45,7 @@ None of those rows verify a subscription in the browser. They burn ten-plus seco
 
 Skip Wait runs on supported BBMKTS subtounlock pages, skips the subscribe busywork, and opens the destination the locker already holds for that id. You stay on the tab with an overlay until the link loads.
 
-No paste tool and no social checklist—just the Sub to Unlock path after license activation.
+No paste tool and no social checklist—just the Sub to Unlock path.
 `;
 
 const faq: readonly BypassFaq[] = [
@@ -63,11 +63,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Does Unlock 2 still appear?',
     answer:
       'Skip Wait targets the destination from the locker id, so you are not babysitting Unlock 2 timers.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

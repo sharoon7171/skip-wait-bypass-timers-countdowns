@@ -45,7 +45,7 @@ That card is the product pain—not a multi-blog tour. The timer and spinner are
 
 Skip Wait runs on the Tumadam unlock page you already opened. It skips the client-only countdown busywork and advances the same continue path Tiếp tục would use when the page marks itself ready.
 
-Cosmetic seconds disappear; you stay on the tab until the unlock destination loads. No paste site, no second tool—just the Tumadam waiting page path after license activation.
+Cosmetic seconds disappear; you stay on the tab until the unlock destination loads. No paste site, no second tool—just the Tumadam waiting page path.
 `;
 
 const faq: readonly BypassFaq[] = [
@@ -63,11 +63,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Is every second removed instantly?',
     answer:
       'Client countdown theater is skipped. If a real hold remains, Skip Wait finishes that step once, then continues.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

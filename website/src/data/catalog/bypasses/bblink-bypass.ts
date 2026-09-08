@@ -47,7 +47,7 @@ Reload mid-chain and the step counter starts over. That stacked continue path is
 
 Skip Wait runs on the BBLINK alias you already opened. It advances the continue forms the page already posts, skips client-only delay theater on those cards, honors the short unlock hold when the server still requires it, then opens the destination Get Link would have returned.
 
-You stay on the tab through the chain. No paste tool—just the BBLINK path after license activation.
+You stay on the tab through the chain. No paste tool—just the BBLINK path.
 `;
 
 const faq: readonly BypassFaq[] = [
@@ -65,11 +65,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Is the last Get Link wait removed instantly?',
     answer:
       'Client chrome is skipped. When BBLINK still enforces a short unlock hold, Skip Wait waits that once, then opens the destination.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 
