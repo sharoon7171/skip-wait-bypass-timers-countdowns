@@ -45,6 +45,7 @@ import { initShrinkpeBackground } from '../sites/shrinkpe';
 import { initSflBackground } from '../sites/sfl';
 import { initLiteshortBackground } from '../sites/liteshort';
 import { initNitrolinkBackground } from '../sites/nitrolink';
+import { initVexolinkBackground } from '../sites/vexolink';
 import { initUnlocktoearnBackground } from '../sites/unlocktoearn';
 import { initCpmlinkNetAdblockInject } from '../sites/cpmlink-net';
 
@@ -95,6 +96,7 @@ initShrinkpeBackground();
 initSflBackground();
 initLiteshortBackground();
 initNitrolinkBackground();
+initVexolinkBackground();
 initUnlocktoearnBackground();
 initCpmlinkNetAdblockInject();
 initHostsSync();
