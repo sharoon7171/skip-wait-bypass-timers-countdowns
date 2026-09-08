@@ -27,6 +27,7 @@ export const overlayClasses = {
   err: 'sw-err',
   hidden: 'sw-hidden',
   turnstile: 'sw-turnstile',
+  turnstilePin: 'sw-turnstile-pin',
   action: 'sw-action',
 } as const;
 
@@ -47,14 +48,14 @@ export function overlayPageLockCss(overlayId: string, activeClass: string): stri
 
 export function overlayRootCss(id: string): string {
   const c = overlayColors;
-  return `#${id}{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:${c.backdrop};backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);font-family:${OVERLAY_FONT};font-size:16px;line-height:1.5;color:${c.textSecondary};pointer-events:auto;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:default;overscroll-behavior:contain;touch-action:none}`;
+  return `#${id}{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:safe center;justify-content:safe center;padding:20px;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;background:${c.backdrop};backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);font-family:${OVERLAY_FONT};font-size:16px;line-height:1.5;color:${c.textSecondary};pointer-events:auto;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:default;touch-action:pan-y}`;
 }
 
 export function overlayCardCss(id: string): string {
   const c = overlayColors;
   const f = OVERLAY_FONT;
   const cl = overlayClasses;
-  return `#${id} .${cl.card}{max-width:440px;width:100%;border-radius:16px;padding:clamp(22px,4vw,28px);background:${c.cardGradient};border:1px solid ${c.cardBorder};box-shadow:${c.cardShadow};pointer-events:none;font-family:${f}}#${id} .${cl.brand}{font-family:${f};font-size:clamp(1em,2.5vw,1.25em);font-weight:700;letter-spacing:-.02em;color:${c.accent};margin-bottom:8px}#${id} .${cl.note}{font-family:${f};margin-bottom:14px}#${id} .${cl.noteLead}{display:block;font-size:clamp(1em,2.8vw,1.15em);font-weight:700;line-height:1.35;color:${c.textPrimary};word-break:break-word;overflow-wrap:anywhere}#${id} .${cl.noteDetail}{display:block;margin-top:8px;font-size:.875em;font-weight:500;line-height:1.4;color:${c.textMuted}}#${id} .${cl.status}{font-family:${f};font-size:.9em;color:${c.textPrimary};min-height:1.4em;margin-bottom:10px}#${id} .${cl.hidden}{display:none!important}`;
+  return `#${id} .${cl.card}{max-width:440px;width:100%;max-height:100%;box-sizing:border-box;border-radius:16px;padding:clamp(22px,4vw,28px);background:${c.cardGradient};border:1px solid ${c.cardBorder};box-shadow:${c.cardShadow};pointer-events:none;font-family:${f}}#${id} .${cl.brand}{font-family:${f};font-size:clamp(1em,2.5vw,1.25em);font-weight:700;letter-spacing:-.02em;color:${c.accent};margin-bottom:8px}#${id} .${cl.note}{font-family:${f};margin-bottom:14px}#${id} .${cl.noteLead}{display:block;font-size:clamp(1em,2.8vw,1.15em);font-weight:700;line-height:1.35;color:${c.textPrimary};word-break:break-word;overflow-wrap:anywhere}#${id} .${cl.noteDetail}{display:block;margin-top:8px;font-size:.875em;font-weight:500;line-height:1.4;color:${c.textMuted}}#${id} .${cl.status}{font-family:${f};font-size:.9em;color:${c.textPrimary};min-height:1.4em;margin-bottom:10px}#${id} .${cl.hidden}{display:none!important}`;
 }
 
 export function overlayCountdownCss(id: string): string {
@@ -68,9 +69,12 @@ export function overlayTurnstileMountCss(id: string): string {
   const cl = overlayClasses;
   const c = overlayColors;
   const f = OVERLAY_FONT;
+  const shown =
+    `#${id} .${cl.turnstile}:not(:empty),#${id} .${cl.turnstile}.${cl.turnstilePin}` +
+    `{display:flex;align-items:stretch;justify-content:center;flex-direction:column;min-height:72px;margin-top:16px;pointer-events:auto!important;isolation:isolate;width:100%;overflow:hidden;border-radius:8px}`;
   return (
-    `#${id} .${cl.turnstile}{display:flex;align-items:stretch;justify-content:center;flex-direction:column;min-height:72px;margin-top:16px;pointer-events:auto!important;isolation:isolate;width:100%;overflow:hidden;border-radius:8px}` +
-    `#${id} .${cl.turnstile}:empty{display:none!important;min-height:0;margin:0}` +
+    `#${id} .${cl.turnstile}{display:none;width:100%;box-sizing:border-box}` +
+    shown +
     `#${id} .${cl.turnstile} iframe{width:100%;min-height:380px;border:0;border-radius:8px;background:transparent;pointer-events:auto!important}` +
     `#${id} .${cl.turnstile} input{pointer-events:auto!important}` +
     `#${id} .${cl.action}{display:block;width:100%;box-sizing:border-box;margin-top:16px;padding:14px 18px;border-radius:10px;background:${c.accent};color:#0f172a;font-family:${f};font-size:1em;font-weight:800;line-height:1.3;text-align:center;text-decoration:none;pointer-events:auto!important;cursor:pointer}` +
