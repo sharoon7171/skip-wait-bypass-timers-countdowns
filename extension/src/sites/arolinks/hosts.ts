@@ -1,31 +1,38 @@
 import { hostMatchesSite } from '../../hosts/check';
 
-export const MSG_ARM = 'AROLINKS_ARM_REFERER' as const;
-export const MSG_OPEN = 'AROLINKS_OPEN_DEST' as const;
-export const MSG_MEDIATOR = 'AROLINKS_MEDIATOR_REFERER' as const;
+export const SITE = 'arolinks' as const;
+
+export const MSG_HOP = 'AROLINKS_HOP' as const;
+export const MSG_UNLOCK = 'AROLINKS_UNLOCK' as const;
+export const MSG_PROGRESS = 'AROLINKS_PROGRESS' as const;
 
 export const AROLINKS_UNLOCK_READY_MS = 25_000;
 export const AROLINKS_DEST_WAIT_MS = 60_000;
 
-const AROLINKS_ALIAS_RE = /^(?=.*[A-Za-z])[A-Za-z0-9]{3,}$/;
-const VPLINK_KEY_RE = /^key-[A-Za-z0-9]+$/;
-const AROLINKS_HOSTS = ['arolinks.com', 'vplink.in'] as const;
+export const ALIAS_DNR = '(key-[A-Za-z0-9]+|[A-Za-z0-9]*[A-Za-z][A-Za-z0-9]*)';
 
-export const arolinksAliasFromPath = (pathname: string): string | null => {
+export type ArolinksProgress = { lead: string; detail: string; status: string };
+
+const ALIAS_RE = /^(?=.*[A-Za-z])[A-Za-z0-9]{3,}$/;
+const KEY_RE = /^key-[A-Za-z0-9]+$/;
+const HOSTS = ['arolinks.com', 'vplink.in'] as const;
+
+export const isWorkingPage = (): boolean =>
+  location.href.startsWith(chrome.runtime.getURL('working.html'));
+
+const aliasFromPath = (pathname: string): string | null => {
   const [seg, ...rest] = pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
-  if (!seg || rest.length > 0 || !(VPLINK_KEY_RE.test(seg) || AROLINKS_ALIAS_RE.test(seg))) return null;
+  if (!seg || rest.length > 0 || !(KEY_RE.test(seg) || ALIAS_RE.test(seg))) return null;
   return seg;
 };
 
-const hostMatches = (hostname: string, roots: readonly string[]): boolean => {
-  const h = hostname.toLowerCase();
-  return roots.some((d) => h === d || h.endsWith(`.${d}`));
-};
-
-export const isArolinksAliasNav = (url: string): boolean => {
+export const isShortUrl = (href: string): boolean => {
   try {
-    const u = new URL(url);
-    return hostMatches(u.hostname, AROLINKS_HOSTS) && !!arolinksAliasFromPath(u.pathname);
+    const u = new URL(href);
+    if (!/^https?:\/\//i.test(u.href)) return false;
+    const h = u.hostname.toLowerCase();
+    if (!HOSTS.some((d) => h === d || h.endsWith(`.${d}`))) return false;
+    return !!aliasFromPath(u.pathname);
   } catch {
     return false;
   }
