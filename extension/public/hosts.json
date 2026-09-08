@@ -310,6 +310,9 @@
   "nitrolink": {
     "hosts": ["nitro-link.com"]
   },
+  "vexolink": {
+    "hosts": ["vexo-link.com"]
+  },
   "multiup": {
     "hosts": ["multiup.io"]
   },
