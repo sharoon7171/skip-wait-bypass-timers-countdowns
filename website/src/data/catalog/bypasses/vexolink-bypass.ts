@@ -30,7 +30,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'A VexoLink alias tries to yank you into article pages labeled Please wait and Loading Link … Wait N Seconds with Next between them, then back to Please wait… and Get Link on the short URL. Skip Wait is the $1.50/month Chrome extension that never leaves VexoLink for that tour and finishes Get Link when the shortener allows it.';
+  'A VexoLink alias tries to yank you into article pages labeled Please wait and Loading Link … Wait N Seconds with Next between them, then back to Please wait… and Get Link on the short URL. Skip Wait is the Chrome extension that never leaves VexoLink for that tour and finishes Get Link when the shortener allows it.';
 
 const body = `## Loading Link is the trap, not the prize
 
@@ -76,11 +76,6 @@ const faq: readonly BypassFaq[] = [
     question: 'What opens after Get Link?',
     answer:
       'Whatever URL VexoLink returns for the alias. If that is Linkvertise or another supported brand, stay on the tab for that next rule.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

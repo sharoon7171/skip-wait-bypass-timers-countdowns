@@ -29,7 +29,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'Secure Checkpoint pages backed by Adsterra ads stall you on COMPLETE STEP and CONTINUE TO NEXT PAGE before Status turns READY. Skip Wait is the $1.50/month Chrome extension that clears those waits so the reward key appears for you to copy and paste into the game.';
+  'Secure Checkpoint pages backed by Adsterra ads stall you on COMPLETE STEP and CONTINUE TO NEXT PAGE before Status turns READY. Skip Wait is the Chrome extension that clears those waits so the reward key appears for you to copy and paste into the game.';
 
 const body = `## Checkpoint ends on a key, not a file URL
 
@@ -76,11 +76,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Do I still see Progress update?',
     answer:
       'Yes. Steps still complete on the Checkpoint session. Progress moves until Status is READY and the key box is shown.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

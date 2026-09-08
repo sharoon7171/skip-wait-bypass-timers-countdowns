@@ -26,7 +26,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'Movies4u often starts on a marketing landing with How To Download From Us, Browse Full Site, Latest Releases, Bollywood, and K-Drama before the live catalog. Skip Wait is the $1.50/month Chrome extension that opens that landing, skips the extra tap, and takes you straight to Latest Releases.';
+  'Movies4u often starts on a marketing landing with How To Download From Us, Browse Full Site, Latest Releases, Bollywood, and K-Drama before the live catalog. Skip Wait is the Chrome extension that opens that landing, skips the extra tap, and takes you straight to Latest Releases.';
 
 const body = `## A landing that sells the brand before the catalog
 
@@ -73,11 +73,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Will this still work if Movies4u changes the catalog domain?',
     answer:
       'Yes, as long as Latest Releases on the landing points at the new live catalog. Skip Wait follows that link.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

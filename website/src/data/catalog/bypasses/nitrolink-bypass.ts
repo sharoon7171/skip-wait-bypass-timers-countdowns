@@ -27,7 +27,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'Nitro Link short URLs try to send you through Please wait / Continue article pages before Your link is almost ready and Get Link. Skip Wait is the $1.50/month Chrome extension that keeps you on the Nitro Link short URL and finishes unlock there.';
+  'Nitro Link short URLs try to send you through Please wait / Continue article pages before Your link is almost ready and Get Link. Skip Wait is the Chrome extension that keeps you on the Nitro Link short URL and finishes unlock there.';
 
 const body = `## Stay on the Nitro Link short URL
 
@@ -68,11 +68,6 @@ const faq: readonly BypassFaq[] = [
     question: 'What about TinyURL into Nitro Link?',
     answer:
       'If TinyURL only opens a Nitro Link alias, this same Nitro Link bypass runs once you are on Nitro Link.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

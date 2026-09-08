@@ -37,7 +37,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'Link4Sub shares often open a Vui lòng đợi screen, then park you on Tap Viet Code-style pages with Tiến trình mở khoá, YouTube or Telegram follow buttons, and Bước tiếp theo clicks before anything useful loads. Skip Wait is the $1.50/month Chrome extension that clears that Link4Sub timer bypass busywork and opens the destination on supported pages.';
+  'Link4Sub shares often open a Vui lòng đợi screen, then park you on Tap Viet Code-style pages with Tiến trình mở khoá, YouTube or Telegram follow buttons, and Bước tiếp theo clicks before anything useful loads. Skip Wait is the Chrome extension that clears that Link4Sub timer bypass busywork and opens the destination on supported pages.';
 
 const body = `## Unlock progress that wants social steps first
 
@@ -84,11 +84,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Continue opened VuotNhanh—same extension?',
     answer:
       'Yes. Stay on the tab. Skip Wait continues on VuotNhanh with the matching catalog rule.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

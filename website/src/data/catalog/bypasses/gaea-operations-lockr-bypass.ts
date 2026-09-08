@@ -46,7 +46,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'A Lockr share rarely ends at the file or channel you were promised. You land on Unlock content, grind Complete the 5 steps after a popup, browser-install offers, and Quick Step clicks, then sit on Unlocks in while Premium begs you to pay. Skip Wait is the $1.50/month Chrome extension for that locker card—cover the noise, clear the waitlist, open the real destination.';
+  'A Lockr share rarely ends at the file or channel you were promised. You land on Unlock content, grind Complete the 5 steps after a popup, browser-install offers, and Quick Step clicks, then sit on Unlocks in while Premium begs you to pay. Skip Wait is the Chrome extension for that locker card—cover the noise, clear the waitlist, open the real destination.';
 
 const body = `## Unlock content cards that never feel finished
 
@@ -94,11 +94,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Why do some Lockr links feel endless after tasks?',
     answer:
       'Long Unlocks in waitlists, nested lockers, or VPN/ad-blocker soft-blocks. Skip Wait is built for that stuck Unlock content card.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

@@ -29,7 +29,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'ReShortFly parks you on PLEASE WAIT TO PROCEED TO THE DESTINATION PAGE with a Seconds counter and a grey Please wait control. Skip Wait is the $1.50/month Chrome extension that covers that waiting page, holds for the real unlock delay, then finishes Get Link so you are not staring at the timer.';
+  'ReShortFly parks you on PLEASE WAIT TO PROCEED TO THE DESTINATION PAGE with a Seconds counter and a grey Please wait control. Skip Wait is the Chrome extension that covers that waiting page, holds for the real unlock delay, then finishes Get Link so you are not staring at the timer.';
 
 const body = `## PLEASE WAIT is the whole product
 
@@ -75,11 +75,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Which URLs start Skip Wait?',
     answer:
       'Short alias links on ReShortFly (one path segment). Home, login, and other site pages do not start it.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

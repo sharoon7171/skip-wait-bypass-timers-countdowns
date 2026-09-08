@@ -33,7 +33,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'VuotNhanh (Vượt Nhanh) short links often freeze on Bạn sẽ được chuyển hướng… with Bạn chờ một chút nhé… and a Tiếp tục control that only softens after a short circle timer. Skip Wait is the $1.50/month Chrome extension that clears that VuotNhanh timer bypass stall and opens the destination on supported pages.';
+  'VuotNhanh (Vượt Nhanh) short links often freeze on Bạn sẽ được chuyển hướng… with Bạn chờ một chút nhé… and a Tiếp tục control that only softens after a short circle timer. Skip Wait is the Chrome extension that clears that VuotNhanh timer bypass stall and opens the destination on supported pages.';
 
 const body = `## Redirect screens that sell a paid skip
 
@@ -80,11 +80,6 @@ const faq: readonly BypassFaq[] = [
     question: 'I arrived from Link4Sub—same extension?',
     answer:
       'Yes. Stay on the tab. After Link4Sub, Skip Wait continues on VuotNhanh with this rule.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 

@@ -29,7 +29,7 @@ const keywords = [
 ] as const;
 
 const intro =
-  'Molyn Development’s free Standard Key still sends you through Start Checkpoints, five Go to Offer hops, and Finish Line before Access Key appears. Skip Wait is the $1.50/month Chrome extension that opens the keysystem, skips that Linkvertise tour, and puts the Access Key on screen with Copy key so you can paste it into the Molyn hub.';
+  'Molyn Development’s free Standard Key still sends you through Start Checkpoints, five Go to Offer hops, and Finish Line before Access Key appears. Skip Wait is the Chrome extension that opens the keysystem, skips that Linkvertise tour, and puts the Access Key on screen with Copy key so you can paste it into the Molyn hub.';
 
 const body = `## Free Standard Key that still wants five offers
 
@@ -86,11 +86,6 @@ const faq: readonly BypassFaq[] = [
     question: 'Is this the same as a generic Linkvertise bypass?',
     answer:
       'No. This entry is for Molyn’s keysystem and Finish Line Access Key flow. Standalone Linkvertise links have their own catalog page.',
-  },
-  {
-    question: 'Do I need a license?',
-    answer:
-      'Yes. Get a free trial or monthly license on EAS Store and activate your key in the extension popup.',
   },
 ];
 
