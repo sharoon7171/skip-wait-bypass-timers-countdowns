@@ -1,143 +1,84 @@
 import { canBypassHost, licensedHosts, onBypassAccessChange } from '../../gate';
-import { MSG_ARM, MSG_MEDIATOR, MSG_OPEN } from './hosts';
-import { fetchLastMediatorReferer } from './hop';
+import { ALIAS_DNR, MSG_HOP, MSG_PROGRESS, MSG_UNLOCK, SITE, isShortUrl, type ArolinksProgress } from './hosts';
+import { resolveMediatorReferer, resolveUnlockDestination } from './resolve';
 
-const RULE_BASE = 917301;
-const CSP_RULE = 917300;
+const RULE_BASE = 917280;
+const RULE_SLOTS = 8;
 
-const isHttp = (v: string): boolean => /^https?:\/\//i.test(v);
+const ruleIds = (): number[] => Array.from({ length: RULE_SLOTS }, (_, i) => RULE_BASE + i);
 
-const ruleIdForTab = (tabId: number): number => RULE_BASE + tabId;
-
-const armCsp = async (): Promise<void> => {
-  const hosts = await licensedHosts('arolinks');
+const syncRedirects = async (): Promise<void> => {
+  const hosts = await licensedHosts(SITE);
   if (!hosts.length) {
-    await chrome.declarativeNetRequest.updateSessionRules({ removeRuleIds: [CSP_RULE], addRules: [] });
+    await chrome.declarativeNetRequest.updateSessionRules({ removeRuleIds: ruleIds(), addRules: [] });
     return;
   }
   await chrome.declarativeNetRequest.updateSessionRules({
-    removeRuleIds: [CSP_RULE],
-    addRules: [
-      {
-        id: CSP_RULE,
-        priority: 2,
-        action: {
-          type: 'modifyHeaders',
-          responseHeaders: [
-            { header: 'Content-Security-Policy', operation: 'set', value: "script-src 'none'" },
-          ],
-        },
-        condition: {
-          requestDomains: hosts,
-          resourceTypes: ['main_frame'],
+    removeRuleIds: ruleIds(),
+    addRules: hosts.slice(0, RULE_SLOTS).map((host, i) => ({
+      id: RULE_BASE + i,
+      priority: 1,
+      action: {
+        type: 'redirect' as const,
+        redirect: {
+          regexSubstitution: `chrome-extension://${chrome.runtime.id}/working.html?site=${SITE}&u=https://${host}/\\1`,
         },
       },
-    ],
+      condition: {
+        regexFilter: `^https?://${host.replace(/\./g, '\\.')}/${ALIAS_DNR}/?$`,
+        resourceTypes: ['main_frame' as const],
+      },
+    })),
   });
 };
 
-const armReferer = async (tabId: number, url: string, referer: string): Promise<boolean> => {
-  const id = ruleIdForTab(tabId);
-  try {
-    await chrome.declarativeNetRequest.updateSessionRules({
-      removeRuleIds: [id],
-      addRules: [
-        {
-          id,
-          priority: 1,
-          action: {
-            type: 'modifyHeaders',
-            requestHeaders: [{ header: 'Referer', operation: 'set', value: referer }],
-          },
-          condition: {
-            urlFilter: `|${url}`,
-            resourceTypes: ['main_frame'],
-            tabIds: [tabId],
-          },
-        },
-      ],
-    });
-    return true;
-  } catch {
-    return false;
-  }
+const pushProgress = (p: ArolinksProgress): void => {
+  void chrome.runtime.sendMessage({ type: MSG_PROGRESS, ...p }).catch(() => {});
 };
-
-const clearReferer = (tabId: number): Promise<void> =>
-  chrome.declarativeNetRequest
-    .updateSessionRules({ removeRuleIds: [ruleIdForTab(tabId)] })
-    .catch(() => {});
 
 export const initArolinksBackground = (): void => {
-  void armCsp();
+  void syncRedirects();
   onBypassAccessChange(() => {
-    void armCsp();
-  });
-  chrome.tabs.onRemoved.addListener((tabId) => {
-    void clearReferer(tabId);
+    void syncRedirects();
   });
   chrome.runtime.onMessage.addListener(
-    (msg: { type?: string; url?: string; referer?: string; shortUrl?: string; assigned?: string }, sender, reply) => {
-      const tabId = sender.tab?.id;
-      if (msg.type === MSG_MEDIATOR) {
-        const shortUrl = typeof msg.shortUrl === 'string' ? msg.shortUrl : '';
-        const assigned = typeof msg.assigned === 'string' ? msg.assigned : '';
-        if (!isHttp(shortUrl) || !isHttp(assigned)) {
-          reply(null);
+    (msg: { type?: string; unlockUrl?: string; referer?: string }, _sender, reply) => {
+      if (msg.type === MSG_HOP) {
+        const unlockUrl = typeof msg.unlockUrl === 'string' ? msg.unlockUrl : '';
+        if (!isShortUrl(unlockUrl)) {
+          reply({ ok: false });
           return false;
         }
         void (async () => {
           try {
-            const host = new URL(shortUrl).hostname;
-            if (!(await canBypassHost(host, 'arolinks'))) {
-              reply(null);
+            if (!(await canBypassHost(new URL(unlockUrl).hostname, SITE))) {
+              reply({ ok: false });
               return;
             }
-            reply(await fetchLastMediatorReferer(shortUrl, assigned));
+            reply({ ok: true, referer: await resolveMediatorReferer(unlockUrl, pushProgress) });
           } catch {
-            reply(null);
+            reply({ ok: false });
           }
         })();
         return true;
       }
-      if (msg.type === MSG_OPEN) {
-        const url = typeof msg.url === 'string' ? msg.url : '';
-        if (tabId == null || !isHttp(url)) {
-          reply(false);
-          return false;
-        }
-        void (async () => {
-          try {
-            const tabHost = sender.tab?.url ? new URL(sender.tab.url).hostname : '';
-            if (!tabHost || !(await canBypassHost(tabHost, 'arolinks'))) {
-              reply(false);
-              return;
-            }
-            await clearReferer(tabId);
-            await chrome.tabs.update(tabId, { url });
-            reply(true);
-          } catch {
-            reply(false);
-          }
-        })();
-        return true;
-      }
-      if (msg.type !== MSG_ARM) return false;
-      const url = typeof msg.url === 'string' ? msg.url : '';
+
+      if (msg.type !== MSG_UNLOCK) return false;
+      const unlockUrl = typeof msg.unlockUrl === 'string' ? msg.unlockUrl : '';
       const referer = typeof msg.referer === 'string' ? msg.referer : '';
-      if (tabId == null || !isHttp(url) || !isHttp(referer)) {
-        reply(false);
+      if (!isShortUrl(unlockUrl) || !/^https?:\/\//i.test(referer)) {
+        reply({ ok: false });
         return false;
       }
       void (async () => {
         try {
-          if (!(await canBypassHost(new URL(url).hostname, 'arolinks'))) {
-            reply(false);
+          if (!(await canBypassHost(new URL(unlockUrl).hostname, SITE))) {
+            reply({ ok: false });
             return;
           }
-          reply(await armReferer(tabId, url, referer));
+          reply({ ok: true, dest: await resolveUnlockDestination(unlockUrl, referer, pushProgress) });
         } catch {
-          reply(false);
+          reply({ ok: false });
         }
       })();
       return true;
