@@ -1,87 +1,119 @@
 import { recordBypassSuccess } from '../../free-bypass';
-import { canBypass } from '../../gate';
-import { whenDomParsed } from '../../utils/domain-check';
-import { armUnlockReferer, openDestinationTab, resolveMediatorReferer } from './client';
-import { isVpnPage, pleaseWaitTarget, unlockDestination } from './gate';
+import { canBypassHost } from '../../gate';
 import {
   AROLINKS_DEST_WAIT_MS,
   AROLINKS_UNLOCK_READY_MS,
-  arolinksAliasFromPath,
-  isArolinksAliasNav,
+  MSG_HOP,
+  MSG_PROGRESS,
+  MSG_UNLOCK,
+  SITE,
+  isShortUrl,
   isTimedDestUrl,
+  isWorkingPage,
+  type ArolinksProgress,
 } from './hosts';
-import { countdown, createOverlay, spoofVisibility } from './overlay';
+import { createOverlay } from './overlay';
 
-const mount = createOverlay();
-let done = false;
+const ui = createOverlay();
 
-const openDestination = async (dest: string): Promise<void> => {
-  if (await isTimedDestUrl(dest)) {
-    const overlay = mount('Waiting for access window…');
-    await countdown(overlay, AROLINKS_DEST_WAIT_MS);
+type HopRes = { ok?: boolean; referer?: string };
+type UnlockRes = { ok?: boolean; dest?: string };
+
+const requestHop = (unlockUrl: string): Promise<HopRes> =>
+  new Promise((resolve) => {
+    chrome.runtime.sendMessage({ type: MSG_HOP, unlockUrl }, (res?: HopRes) => {
+      resolve(res ?? { ok: false });
+    });
+  });
+
+const requestUnlock = (unlockUrl: string, referer: string): Promise<UnlockRes> =>
+  new Promise((resolve) => {
+    chrome.runtime.sendMessage({ type: MSG_UNLOCK, unlockUrl, referer }, (res?: UnlockRes) => {
+      resolve(res ?? { ok: false });
+    });
+  });
+
+const run = async (unlockUrl: string): Promise<void> => {
+  const onProgress = (msg: { type?: string } & Partial<ArolinksProgress>): void => {
+    if (msg.type !== MSG_PROGRESS || !msg.status || !msg.lead || !msg.detail) return;
+    ui.progress({ lead: msg.lead, detail: msg.detail, status: msg.status });
+  };
+  chrome.runtime.onMessage.addListener(onProgress);
+
+  try {
+    ui.progress({
+      lead: 'Hang tight — unlocking your link.',
+      detail: 'Skip Wait is handling the waiting pages for you.',
+      status: 'Opening your short link',
+    });
+    ui.startCountdown(AROLINKS_UNLOCK_READY_MS);
+
+    let host: string;
+    try {
+      host = new URL(unlockUrl).hostname;
+    } catch {
+      ui.setError('Invalid unlock link.');
+      return;
+    }
+    if (!(await canBypassHost(host, SITE))) {
+      ui.setError('Arolinks is not available.');
+      return;
+    }
+
+    const started = Date.now();
+    const hop = await requestHop(unlockUrl);
+    if (!hop.ok || !hop.referer) {
+      ui.setError('Could not unlock.');
+      return;
+    }
+
+    const left = Math.max(0, AROLINKS_UNLOCK_READY_MS - (Date.now() - started));
+    if (left > 0) {
+      ui.progress({
+        lead: 'Unlocking your link.',
+        detail: "Skip Wait is finishing the unlock step for you. You don't need to tap anything.",
+        status: 'Waiting for unlock timer',
+      });
+      await new Promise<void>((r) => setTimeout(r, left));
+    }
+
+    const unlocked = await requestUnlock(unlockUrl, hop.referer);
+    if (!unlocked.ok || !unlocked.dest) {
+      ui.setError('Could not unlock.');
+      return;
+    }
+
+    ui.hideCountdown();
+    const dest = unlocked.dest;
+
+    if (await isTimedDestUrl(dest)) {
+      ui.progress({
+        lead: 'Almost there.',
+        detail: 'Waiting for the access window before opening your link.',
+        status: 'Waiting for access window',
+      });
+      ui.startCountdown(AROLINKS_DEST_WAIT_MS);
+      await new Promise<void>((r) => setTimeout(r, AROLINKS_DEST_WAIT_MS));
+      ui.hideCountdown();
+    }
+
+    recordBypassSuccess();
+    location.replace(dest);
+  } catch {
+    ui.setError('Could not unlock.');
+  } finally {
+    chrome.runtime.onMessage.removeListener(onProgress);
   }
-  const overlay = mount('Opening your link…');
-  if (await openDestinationTab(dest)) recordBypassSuccess();
-  else overlay.setStatus('Could not open link');
-};
-
-const openUnlockPage = async (alias: string, assigned: string): Promise<void> => {
-  const overlay = mount('Getting things ready…');
-  const [, referer] = await Promise.all([
-    countdown(overlay, AROLINKS_UNLOCK_READY_MS),
-    resolveMediatorReferer(location.href, assigned),
-  ]);
-  overlay.setStatus('Opening unlock page…');
-  const url = `${location.origin}/${alias}`;
-  if (!referer || !(await armUnlockReferer(url, referer))) {
-    overlay.setStatus('Could not open link');
-    return;
-  }
-  location.replace(url);
-};
-
-const run = async (alias: string): Promise<void> => {
-  if (done || isVpnPage()) return;
-  const dest = unlockDestination();
-  if (dest) {
-    done = true;
-    spoofVisibility();
-    await openDestination(dest);
-    return;
-  }
-  const assigned = pleaseWaitTarget(document.documentElement.innerHTML, location.href);
-  if (!assigned || isArolinksAliasNav(assigned)) return;
-  done = true;
-  spoofVisibility();
-  await openUnlockPage(alias, assigned);
 };
 
 export const initArolinksUnlock = (): void => {
-  if (window !== window.top) return;
-  const alias = arolinksAliasFromPath(location.pathname);
-  if (!alias) return;
-
-  void canBypass('arolinks').then((ok) => {
-    if (!ok) return;
-    const tick = (): void => {
-      void run(alias);
-    };
-    tick();
-    if (done) return;
-    const observer = new MutationObserver(() => {
-      tick();
-      if (done) observer.disconnect();
-    });
-    observer.observe(document.documentElement, {
-      attributeFilter: ['href'],
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-    const poll = window.setInterval(() => {
-      tick();
-      if (done) window.clearInterval(poll);
-    }, 200);
-    whenDomParsed(tick);
-  });
+  if (window !== window.top || !isWorkingPage()) return;
+  const q = new URLSearchParams(location.search);
+  if (q.get('site')?.trim() !== SITE) return;
+  const unlockUrl = q.get('u')?.trim() ?? '';
+  if (!isShortUrl(unlockUrl)) {
+    ui.setError('Missing unlock details.');
+    return;
+  }
+  void run(unlockUrl);
 };
