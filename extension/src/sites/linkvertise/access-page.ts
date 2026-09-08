@@ -18,6 +18,11 @@ const NOTE = {
   detail: 'Skip Wait is working. You don’t need to tap anything.',
 } as const;
 
+const WAIT_NOTE = {
+  detail:
+    'Linkvertise blocked free unlock on your current IP with a long wait. Use a VPN or restart your router so your IP changes, then open this link again.',
+} as const;
+
 let ui: FullPageOverlay | null = null;
 let started = false;
 let finished = false;
@@ -116,9 +121,14 @@ const runAccessPage = (): void => {
       if (!finished) overlay.setStatus(text);
     },
     onWait: (endAt) => {
-      if (!finished) overlay.startCountdown(endAt);
+      if (finished) return;
+      overlay.setNote(WAIT_NOTE);
+      overlay.startCountdown(endAt);
     },
-    onWaitDone: () => overlay.hideCountdown(),
+    onWaitDone: () => {
+      overlay.hideCountdown();
+      if (!finished) overlay.setNote(NOTE);
+    },
   })
     .then((ready) => {
       if (!finished) applySuccessTarget(ready, overlay);
