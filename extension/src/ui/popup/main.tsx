@@ -69,8 +69,8 @@ function PopupPage(): React.ReactElement {
           </div>
 
           <section className={supportCard}>
-            <p className={supportTitle}>Bypass broken?</p>
-            <p className={supportBody}>Send the page URL — we add domains or new sites fast.</p>
+            <p className={supportTitle}>Bypass Fix or New Request</p>
+            <p className={supportBody}>Send the page URL and we’ll take it from there.</p>
             <div className={contactGrid}>
               {contacts.map((contact) => (
                 <a
