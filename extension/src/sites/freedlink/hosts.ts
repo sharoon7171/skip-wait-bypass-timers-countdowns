@@ -1,4 +1,4 @@
-export const FREEDLINK_FILE_RE = /^\/([A-Za-z0-9]+)\/.+\.html$/i;
+export const FREEDLINK_FILE_RE = /^\/([A-Za-z0-9]+)\/[^/]+$/i;
 
 export const FREE_FORM = 'form[name="FREE1"]';
 export const FREE_BUTTON = '#downloadbtnfree';
