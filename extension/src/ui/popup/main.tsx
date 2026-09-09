@@ -61,7 +61,7 @@ function PopupPage(): React.ReactElement {
               <span className={`${actionTileIconWrap} ${actionTileIconSites}`}>
                 <IconGlobe className="size-4" />
               </span>
-              <p className={actionTileTitle}>Supported sites</p>
+              <p className={actionTileTitle}>Supported Sites</p>
               <p className={actionTileBody}>Browse every site and host Skip Wait currently bypasses.</p>
               <p className={actionTileMeta}>Opens the full list on our website</p>
             </a>

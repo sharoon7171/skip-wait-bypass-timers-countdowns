@@ -57,7 +57,7 @@ export function Header(): React.ReactElement {
         <img src={assetUrl('icon.png')} alt="" className={headerIcon} width={48} height={48} />
         <div className="min-w-0">
           <h1 className={headerTitle}>Skip Wait</h1>
-          <p className={headerTag}>Skip timers & download waits instantly</p>
+          <p className={headerTag}>Skip Timers & Download Waits Instantly</p>
         </div>
       </div>
       {pill}

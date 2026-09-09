@@ -57,7 +57,7 @@ export function DomainsTile(): React.ReactElement {
       <span className={`${actionTileIconWrap} ${actionTileIconDomains}`}>
         <IconRefresh className={`size-4 ${busy ? 'animate-spin' : ''}`} />
       </span>
-      <p className={actionTileTitle}>{busy ? 'Refreshing…' : 'New domains'}</p>
+      <p className={actionTileTitle}>{busy ? 'Refreshing…' : 'New Domains'}</p>
       <p className={actionTileBody}>Download newer bypass domains — no Chrome Web Store update needed.</p>
       <p className={actionTileMeta}>{statusLine}</p>
     </button>
