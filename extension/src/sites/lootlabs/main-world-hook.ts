@@ -76,7 +76,7 @@ export function runLootBootstrap(msgSource: string): void {
     action_pixel_url?: string;
     auto_complete_seconds?: number;
   };
-  type LootTcBody = { tid: number; rkey: string; session: string; botd?: string };
+  type LootTcBody = { tid: number; rkey: string; session: string; botd?: string; tier_id?: string };
   type TcCap = { url: string; body: LootTcBody; text: string };
   type LootWin = Window & {
     __swLootHooked?: boolean;
@@ -149,6 +149,7 @@ export function runLootBootstrap(msgSource: string): void {
 
   const sanitizeBody = (raw: string): string => {
     const body = JSON.parse(raw) as LootTcBody;
+    body.tier_id = '1';
     if (typeof body.botd === 'string') {
       try {
         const botd = JSON.parse(body.botd) as { bot?: boolean; botKind?: string };
