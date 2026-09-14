@@ -7,7 +7,15 @@ const bypassType = 'Skip Landing Wait';
 const description =
   'Vegamovies bypass that skips the vglist connecting delay on Quick Access so VegaMovies, RogMovies, Anime, and Xprime live servers open without a forced hub wait.';
 
-const domains = ['vglist.top', 'vglist.nl'] as const;
+const domains = [
+  '1vegamovies.cc',
+  '1vegamovies.cfd',
+  '1vegamovies.me',
+  '1vegamovies.tw',
+  'vglist.fit',
+  'vglist.top',
+  'vglist.nl',
+] as const;
 
 const keywords = [
   'vegamovies bypass',
