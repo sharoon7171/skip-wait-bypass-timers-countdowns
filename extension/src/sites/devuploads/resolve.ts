@@ -1,21 +1,34 @@
 import { canBypassHost } from '../../gate';
+import { SITE } from './hosts';
 
 const MSG = 'DEVUPLOADS_DOWNLOAD2' as const;
 const CDN_RE = /https?:\/\/du\d+\.devuploads\.com\/d\/[A-Za-z0-9._~/-]+/i;
-const SITE = 'devuploads-mediator';
 
 type Req = { type: typeof MSG; id: string };
 type Res = { url: string | null };
 
+const pickCdn = (html: string): string | null => {
+  const ori = html.match(
+    /<input[^>]*name=["']orilink["'][^>]*value=["']([^"']+)["'][^>]*>/i,
+  )?.[1];
+  if (ori && CDN_RE.test(ori)) return ori;
+  const flipped = html.match(
+    /<input[^>]*value=["'](https?:\/\/du\d+\.devuploads\.com\/d\/[^"']+)["'][^>]*name=["']orilink["']/i,
+  )?.[1];
+  if (flipped && CDN_RE.test(flipped)) return flipped;
+  return html.match(CDN_RE)?.[0] ?? null;
+};
+
 const mintCdn = async (id: string): Promise<string | null> => {
-  const res = await fetch(`https://devuploads.com/${id}`, {
+  const page = `https://devuploads.com/${id}`;
+  const res = await fetch(page, {
     method: 'POST',
     credentials: 'omit',
     cache: 'no-store',
     headers: {
       Accept: 'text/html,*/*',
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      Referer: `https://devuploads.com/${id}`,
+      Referer: page,
     },
     body: new URLSearchParams({
       op: 'download2',
@@ -30,7 +43,8 @@ const mintCdn = async (id: string): Promise<string | null> => {
       ipp: '',
     }),
   });
-  return res.ok ? ((await res.text()).match(CDN_RE)?.[0] ?? null) : null;
+  if (!res.ok) return null;
+  return pickCdn(await res.text());
 };
 
 export const initDevuploadsResolve = (): void => {
