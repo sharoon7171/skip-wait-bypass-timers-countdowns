@@ -1,95 +1,76 @@
 import { recordBypassSuccess } from '../../free-bypass';
 import { canBypass } from '../../gate';
-import { createFullPageOverlay, type FullPageOverlay } from '../../injected-ui/full-page-overlay';
-import { buildFullPageOverlayCss, overlayActiveClass } from '../../injected-ui/overlay-styles';
 import { whenDomParsed } from '../../utils/domain-check';
+import {
+  MSG_DEVUPLOADS_HOLD,
+  MSG_DEVUPLOADS_RELEASE,
+  SITE,
+  fileIdFromHref,
+  isDevuploadsFileUrlSync,
+} from './hosts';
+import { createOverlay } from './overlay';
 import { requestCdn } from './resolve';
 
-const OVERLAY_ID = 'skip-wait-devuploads-overlay';
-const BOOT_STYLE_ID = 'skip-wait-devuploads-boot';
-const SIZE_RE = /(\d+(?:\.\d+)?\s*[KMGT]?B)/i;
 const ACTION = 'Direct Download · Skip Wait — No Timer, No Mediator';
+const ERR_UNLOCK = 'Could not unlock this file. Reload and try again.';
 
-let ui: FullPageOverlay | null = null;
+let ui: ReturnType<typeof createOverlay> | null = null;
 let started = false;
 
 const fileMeta = (): { name: string; size: string } => {
   const name =
-    document.querySelector('.file-info .name h4')?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+    document.querySelector<HTMLInputElement>('input[name="title"]')?.value.trim() ||
+    document.querySelector('.file-info .name h4')?.textContent?.replace(/\s+/g, ' ').trim() ||
+    '';
   const size =
+    [...document.querySelectorAll<HTMLInputElement>('input[name="size"]')]
+      .map((el) => el.value.trim())
+      .find((v) => /\d/.test(v) && /[bkmgt]/i.test(v)) ||
     [...document.querySelectorAll('.file-info .name span')]
       .map((el) => el.textContent?.replace(/\s+/g, ' ').trim() ?? '')
-      .map((t) => t.match(SIZE_RE)?.[1]?.replace(/\s+/g, ' ').trim() ?? '')
-      .find(Boolean) ?? '';
+      .find((t) => /\d/.test(t) && /[bkmgt]/i.test(t)) ||
+    '';
   return { name, size };
 };
 
-const fileNote = (name: string, size: string) =>
-  size
-    ? { lead: name || 'Hang tight — unlocking your file.', detail: size }
-    : { lead: name || 'Hang tight — unlocking your file.' };
-
-const boot = (): void => {
-  const active = overlayActiveClass(OVERLAY_ID);
-  document.documentElement.classList.add(active);
-  if (document.getElementById(BOOT_STYLE_ID)) return;
-  const s = document.createElement('style');
-  s.id = BOOT_STYLE_ID;
-  s.textContent = buildFullPageOverlayCss(OVERLAY_ID, active);
-  (document.head || document.documentElement).appendChild(s);
-};
-
-const mount = (status: string, name: string, size: string): FullPageOverlay => {
-  boot();
-  if (ui) {
-    ui.setNote(fileNote(name, size));
-    ui.setStatus(status);
-    ui.setError(null);
-    return ui;
-  }
-  ui = createFullPageOverlay({
-    id: OVERLAY_ID,
-    brand: 'Skip Wait',
-    note: fileNote(name, size),
-    status,
-  });
-  return ui;
-};
-
-const isDevuploadsCard = (): HTMLFormElement | null => {
-  const form = document.querySelector<HTMLFormElement>('#dlform');
-  if (!form?.querySelector('input[name="op"][value="download2"]')) return null;
-  if (!/devuploads\.com/i.test(form.getAttribute('action') || form.action)) return null;
-  return form;
-};
-
-const unlock = async (id: string, name: string, size: string): Promise<void> => {
-  const overlay = mount('Resolving direct CDN…', name, size);
-  try {
-    const url = await requestCdn(id);
-    overlay.setStatus('Ready — tap Direct Download when you want the file.');
-    overlay.setAction(url, ACTION);
-    recordBypassSuccess();
-  } catch {
-    started = false;
-    overlay.setAction(null);
-    overlay.setError('Could not unlock this file. Reload and try again.');
-  }
-};
-
-export const initDevuploadsMediator = (): void => {
+export const initDevuploadsBypass = (): void => {
   if (window !== window.top) return;
-  void canBypass('devuploads-mediator').then((ok) => {
-    if (!ok) return;
+  if (!isDevuploadsFileUrlSync(location.href)) return;
+
+  chrome.runtime.sendMessage({ type: MSG_DEVUPLOADS_HOLD }).catch(() => {});
+
+  const id = fileIdFromHref(location.href);
+  if (!id) return;
+
+  void canBypass(SITE).then((ok) => {
+    if (!ok) {
+      chrome.runtime.sendMessage({ type: MSG_DEVUPLOADS_RELEASE }).catch(() => {});
+      return;
+    }
+    if (started) return;
+    started = true;
+    ui = createOverlay();
+    ui.progress({ status: 'Getting things ready' });
+
     whenDomParsed(() => {
-      const form = isDevuploadsCard();
-      const id = form?.querySelector<HTMLInputElement>('input[name="id"]')?.value.trim();
-      if (!form || !id || started) return;
-      started = true;
-      const { name, size } = fileMeta();
-      boot();
-      mount('Getting things ready…', name, size);
-      void unlock(id, name, size);
+      const meta = fileMeta();
+      ui!.progress({ status: 'Resolving direct CDN', ...meta });
+      void requestCdn(id)
+        .then((url) => {
+          const ready = fileMeta();
+          ui!.setReady({
+            status: 'Ready — tap Direct Download when you want the file',
+            name: ready.name || meta.name,
+            size: ready.size || meta.size,
+            url,
+            action: ACTION,
+          });
+          recordBypassSuccess();
+        })
+        .catch(() => {
+          started = false;
+          ui!.setError('Unlock failed', ERR_UNLOCK);
+        });
     });
   });
 };
