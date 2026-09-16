@@ -11,6 +11,7 @@ const domains = [
   'cryptoinsights.site',
   'cryptonewz.one',
   'gadgetsweb.xyz',
+  'greenmotors.cc',
   'greenmountmotors.com',
   'inventoryidea.com',
   'taazabull24.com',
