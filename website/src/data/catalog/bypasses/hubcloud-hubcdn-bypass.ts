@@ -12,6 +12,7 @@ const domains = [
   'hubcloud.foo',
   'hubcloud.club',
   'hubcloud.fans',
+  'hubcloud.ist',
   'vcloud.zip',
   'vcloud.fit',
   'hubcdn.sbs',
