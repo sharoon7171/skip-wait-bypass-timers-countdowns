@@ -7,7 +7,7 @@ const bypassType = 'Skip Short Link';
 const description =
   'ShrinkEarn bypass clears advertisingcamps Turnstile, blog hops, and Your Link Is Almost Ready so Skip Wait opens the destination.';
 
-const domains = ['oii.la', 'tpi.li'] as const;
+const domains = ['clksz.com', 'oii.la', 'tpi.li'] as const;
 
 const keywords = [
   'shrinkearn bypass',
