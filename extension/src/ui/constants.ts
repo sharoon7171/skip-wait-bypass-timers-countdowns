@@ -11,12 +11,15 @@ export const SUPPORTED_SITES_URL = `${WEBSITE_URL}/sites`;
 export const EAS_STORE_URL =
   'https://eas-x.com/products/skip-wait-bypass-timers-countdowns-chrome-extension-license';
 
+export const EAS_LICENSES_URL = 'https://eas-x.com/account/licenses';
+
 export const PRICE_LABEL = '$1.50 / month';
 
 export const LICENSE_COPY = {
   buyHeading: 'Unlock Bypass',
   buyAfterPurchase: 'Paste Your EAS Key',
   buyWhy: 'Pick a plan, grab your key, activate below.',
+  buyNoEmailLink: 'Open this page',
   buyDevice: 'One Key per Device',
   storeTrial: 'Free Trial',
   storeTrialPrice: '$0',

@@ -42,7 +42,7 @@ import {
   stepLabel,
   stepRow,
 } from '../../../ui-classes/popup';
-import { EAS_STORE_URL, LICENSE_COPY } from '../constants';
+import { EAS_LICENSES_URL, EAS_STORE_URL, LICENSE_COPY } from '../constants';
 import { IconCheck, IconLicenseKey } from './icons';
 
 const copy = LICENSE_COPY;
@@ -243,6 +243,18 @@ export function LicenseSection(): React.ReactElement {
           <span className={stepBadge}>2</span>
           <span className={stepLabel}>{copy.buyAfterPurchase}</span>
         </div>
+        <p className="mb-2.5 text-[0.6875rem] font-medium leading-snug text-ink-soft">
+          No key in email?{' '}
+          <a
+            href={EAS_LICENSES_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary-700 underline decoration-primary-600/30 underline-offset-2 hover:decoration-primary-600"
+          >
+            {copy.buyNoEmailLink}
+          </a>
+          , sign in with the account you used to buy, then copy your key.
+        </p>
         {error ? <p className={`${errorBanner} mb-2`}>{error}</p> : null}
         <input
           type="text"
