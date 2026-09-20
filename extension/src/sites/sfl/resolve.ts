@@ -25,6 +25,7 @@ const field = (html: string, name: string): string | null => {
 };
 
 const withReferer = async <T>(url: string, referer: string, run: () => Promise<T>): Promise<T> => {
+  const origin = new URL(referer).origin;
   await chrome.declarativeNetRequest.updateSessionRules({
     removeRuleIds: [REFERER_RULE],
     addRules: [
@@ -33,7 +34,10 @@ const withReferer = async <T>(url: string, referer: string, run: () => Promise<T
         priority: 1,
         action: {
           type: 'modifyHeaders',
-          requestHeaders: [{ header: 'Referer', operation: 'set', value: referer }],
+          requestHeaders: [
+            { header: 'Referer', operation: 'set', value: referer },
+            { header: 'Origin', operation: 'set', value: origin },
+          ],
         },
         condition: {
           urlFilter: `|${url}`,
