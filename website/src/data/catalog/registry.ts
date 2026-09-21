@@ -139,6 +139,7 @@ import { bypass as weadownBypass } from './bypasses/weadown-bypass';
 import { bypass as zifuryBypass } from './bypasses/zifury-bypass';
 import { bypass as workinkBypass } from './bypasses/workink-bypass';
 import { bypass as wpSafelinkBypass } from './bypasses/wp-safelink-bypass';
+import { bypass as xfreeBypass } from './bypasses/xfree-bypass';
 import { bypass as xdmoviesBypass } from './bypasses/xdmovies-bypass';
 import { bypass as xdmoviesMediatorBypass } from './bypasses/xdmovies-mediator-bypass';
 import { bypass as yasir252Bypass } from './bypasses/yasir252-bypass';
@@ -287,6 +288,7 @@ export const bypasses: readonly SupportedBypass[] = [
   zifuryBypass,
   workinkBypass,
   wpSafelinkBypass,
+  xfreeBypass,
   xdmoviesBypass,
   xdmoviesMediatorBypass,
   yasir252Bypass,
