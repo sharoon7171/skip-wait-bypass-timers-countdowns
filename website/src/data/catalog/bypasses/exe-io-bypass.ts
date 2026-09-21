@@ -5,7 +5,7 @@ const name = 'Exe.io';
 const bypassType = 'Skip Waiting Page';
 
 const description =
-  'Exe.io bypass walks the continue gate, Turnstile check, and go-link unlock timer on exe.io and exeygo.com so Skip Wait opens the destination when the session is ready.';
+  'Clear Exe.io and exeygo waiting pages with Skip Wait. This Chrome extension opens your destination once the unlock timer completes. Exe.io bypass for those pages.';
 
 const domains = ['exe.io', 'exeygo.com'] as const;
 
@@ -13,74 +13,85 @@ const keywords = [
   'exe.io bypass',
   'Exe.io bypass extension',
   'exe.io timer bypass',
+  'exe.io get link',
+  'exe.io continue bypass',
   'exeygo bypass',
   'exeygo.com bypass',
+  'exeygo get link',
+  'exeygo turnstile',
   'skip waiting page',
-  'skip countdown timer',
-  'bypass countdown timer',
-  'link shortener bypass',
-  'skip wait extension',
   'please wait bypass',
   'waiting page bypass',
   'skip click to continue',
   'get link bypass',
-  'exe.io get link',
+  'get link timer bypass',
+  'bypass countdown timer',
+  'skip countdown timer',
+  'link shortener bypass',
+  'skip wait extension',
 ] as const;
 
 const intro =
-  'Exe.io bypass searches spike when a short link stops on please-wait chrome, a captcha, or a Get Link countdown instead of the file or article. Skip Wait is the Chrome extension that runs the live unlock path on exe.io and exeygo.com—continue, captcha, then go-link—without you clicking through every gate by hand.';
+  'Exe.io and exeygo short links usually present three unlock stages: Continue, a captcha check, then Get Link with a countdown. Skip Wait runs those steps in Chrome when a waiting gate is on the page, waits the real Get Link timer, and opens your link.';
 
-const body = `## Three gates before the real redirect
+const body = `## Three Unlock Stages on Exe.io
 
-Exe.io-style shorteners chain more than one screen. You usually hit a Continue gate first, then a Turnstile human check, then a banner page with a Get Link button and a countdown. Only that last go-link step carries the unlock timer; earlier hops are not on a fake delay clock.
+One Exe.io or exeygo short link rarely opens the final file in a single load. First comes Continue (please wait or click to go on). Next is often captcha (“I am not a robot”). Last is Get Link, where a countdown still runs before unlock. Only that last timer is a real hold Skip Wait must wait. The earlier stages are Continue and captcha checks, not a clock Skip Wait erases.
 
-Shares often open on **exeygo.com**, a mirror host on the same network. Skip Wait treats matching exe.io and exeygo.com tabs the same so you do not restart the hunt when the alias host rotates.
+exeygo uses the same unlock pattern as Exe.io for these gates. Skip Wait treats matching waiting pages on both brands the same. The ordinary homepage or marketing page has no Continue, captcha, or Get Link gate, so Skip Wait does not run there. This Exe.io bypass applies only when an unlock waiting page is present.
 
-### What each phase does
+### Unlock Order
 
-1. **Continue** — clears the first please-wait / click-to-continue gate
-2. **Turnstile** — finishes the human check when the shortener still requires it
-3. **Get Link** — waits the real go-page hold, then posts unlock and follows the redirect
+1. **Continue:** move past the first please wait or continue step
+2. **Captcha:** complete “I am not a robot” when the site shows it
+3. **Get Link:** wait the countdown, then open the destination
 
-Leave mid-chain and the same waiting page bypass loop starts again. An Exe.io bypass extension install is meant to keep one live session moving through those phases inside Chrome.
+Closing the tab mid-way often restarts the full sequence. Keep the tab open and let Skip Wait complete each stage.
 
-## Unlock on the go-link page, not a paste box
+## What Skip Wait Does on Each Stage
 
-Skip Wait does not ask you to copy the alias into another site. It stays on the tab you opened, advances supported continue and captcha steps, syncs the overlay countdown with the go-page timer, and unlocks when the shortener allows redirect.
+You stay on the same Chrome tab. You do not paste the link into another tool.
 
-Client-only clutter and disabled unlock chrome get out of the way. Holds the server still enforces on the go-link step are waited honestly—so exe.io timer bypass stays stable instead of bouncing back to the start.
+**Continue:** Skip Wait advances that step and clears “turn off your ad blocker” messages that hide the button.
 
-## Captcha when the shortener still asks
+**Captcha:** Skip Wait shows the check on screen. Complete it once; Skip Wait continues afterward.
 
-If Turnstile appears on the gate, finish it once on the pinned widget under the Skip Wait overlay. After the token exists, the extension submits that phase and continues toward Get Link. That keeps link shortener bypass practical in Chrome rather than a captcha farm tab.
+**Get Link:** Skip Wait follows the countdown the page still shows, waits it out, then unlocks and opens your destination. That is a get link timer bypass that respects the real hold, not a fake skip that returns you to Continue.
+
+## Captcha and Ad Blocker Warnings
+
+If captcha appears, complete it where Skip Wait shows it, then let Skip Wait move to Get Link. If an ad blocker warning removes Continue or captcha, Skip Wait clears that warning so the real controls return.
+
+Open the short link as usual. When Continue, captcha, or Get Link is visible, Skip Wait can assist on that stage.
 `;
-
 
 const faq: readonly BypassFaq[] = [
   {
-    question: 'What does an Exe.io bypass skip?',
+    question: 'What does Skip Wait skip on Exe.io?',
     answer:
-      'Continue gates, captcha busywork after you verify once, and manual Get Link clicking on supported exe.io and exeygo.com pages. The go-link timer is synced and released when unlock is allowed.',
+      'Manual Continue clicks, most of the captcha step after you verify once, and pressing Get Link yourself on supported Exe.io and exeygo waiting pages. The Get Link countdown is still waited, then your link opens.',
   },
   {
-    question: 'Is the countdown removed on every screen?',
+    question: 'Is every timer removed?',
     answer:
-      'No. Only the final go-link page uses a real unlock timer. Continue and captcha hops run as soon as the page allows—there is no extra countdown theater on those steps.',
+      'No. Only Get Link has a real timer. Continue and captcha proceed as soon as the page allows.',
   },
   {
-    question: 'Does Skip Wait handle Turnstile?',
+    question: 'Do I still complete the captcha?',
+    answer: 'Yes, once where Skip Wait shows it. After that, Skip Wait continues to Get Link.',
+  },
+  {
+    question: 'Why does nothing happen on the exeygo homepage?',
     answer:
-      'Yes. Complete the check on the pinned widget; Skip Wait continues the unlock chain afterward.',
+      'Skip Wait starts only when Continue, captcha, or Get Link is on the page, not on the plain homepage.',
   },
   {
     question: 'Do I click Continue or Get Link myself?',
-    answer:
-      'On supported gates, no. Skip Wait advances continue, captcha, and go-link unlock inside the live tab.',
+    answer: 'On supported waiting pages, no. Skip Wait handles those steps in the same tab.',
   },
   {
-    question: 'Does exeygo.com work the same as exe.io?',
-    answer:
-      'Yes on supported pages. Open the shared alias normally; matching mirror hosts use the same bypass path.',
+    question: 'Is exeygo the same as Exe.io here?',
+    answer: 'Yes for matching waiting pages. Open the link as usual; Skip Wait uses the same path on both.',
   },
 ];
 
