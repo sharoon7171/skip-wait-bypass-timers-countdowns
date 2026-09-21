@@ -139,6 +139,7 @@ import { initWorkinkGate } from '../sites/workink';
 
 import { initStorylineCoursePlayBrand } from '../sites/storyline-scorm';
 import { initStreamerviewerbotCount } from '../sites/streamerviewerbot';
+import { initXfreeCount } from '../sites/xfree';
 import { initSwiftuploadsDirectDownload } from '../sites/swiftuploads';
 import { initUploadrarBypass } from '../sites/uploadrar';
 import { initFilespayoutsBypass } from '../sites/filespayouts';
@@ -164,6 +165,7 @@ import { dropExpiredLicense, getLicenseSession, storageKeys } from '../license/s
 const INITS = [
   initStorylineCoursePlayBrand,
   initStreamerviewerbotCount,
+  initXfreeCount,
   initLinknextGate,
   initLinkvertiseAccessPage,
   initCutyGate,
