@@ -3,18 +3,76 @@ import { canBypass } from '../../gate';
 import { createFullPageOverlay, type FullPageOverlay } from '../../injected-ui/full-page-overlay';
 import { buildFullPageOverlayCss, overlayActiveClass } from '../../injected-ui/overlay-styles';
 import { whenDomParsed } from '../../utils/domain-check';
-import { csrfFromPage, oneShortlinkJob, postGetLinkDownload } from './unlock';
+import {
+  csrfFromPage,
+  isFullPagesPath,
+  oneShortlinkJob,
+  passwordRequired,
+  postCheckClick,
+  postGetLinkDownload,
+  resolveFullPagesRedirect,
+  unlockFromPage,
+  type OneShortlinkJob,
+} from './unlock';
 
 const OVERLAY_ID = 'skip-wait-1shortlink-overlay';
 const BOOT_STYLE_ID = 'skip-wait-1shortlink-boot';
+const PULSE_MS = 450;
+const LEAD = 'Skipping the waiting page.';
 
-const NOTE = {
-  lead: 'Hang tight — unlocking your link.',
-  detail: "You don't need to tap anything on the page.",
-} as const;
+type Stage = {
+  lead?: string;
+  detail: string;
+  status: string;
+  pulse?: boolean;
+};
+
+const STAGE = {
+  ready: {
+    detail: 'Skip Wait clears the continue gate so you are not hunting buttons under ads.',
+    status: 'Getting things ready',
+  },
+  openGate: {
+    detail: 'Moving from the confirm page to unlock.',
+    status: 'Opening the continue page',
+  },
+  prepare: {
+    detail: 'No need to tap Continue or watch the please-wait strip.',
+    status: 'Preparing unlock',
+  },
+  unlock: {
+    detail: 'Advancing the continue flow this shortener already expects.',
+    status: 'Unlocking your link',
+  },
+  continue: {
+    detail: 'Finishing Continue for you — nothing to dig out of the ads.',
+    status: 'Confirming continue',
+  },
+  open: {
+    detail: 'Opening the destination attached to this share.',
+    status: 'Opening your link',
+  },
+  password: {
+    lead: 'This link needs a password.',
+    detail: 'Unlock it on the page, then reload so Skip Wait can continue.',
+    status: 'Password required',
+    pulse: false,
+  },
+  failed: {
+    lead: 'Unlock did not finish.',
+    detail: 'Skip Wait could not clear this waiting page.',
+    status: 'Something went wrong',
+    pulse: false,
+  },
+} as const satisfies Record<string, Stage>;
 
 let ui: FullPageOverlay | null = null;
 let started = false;
+let pulseTimer: number | null = null;
+let pulseDots = 0;
+let statusBase = '';
+
+const isGatePage = (): boolean => isFullPagesPath() || !!oneShortlinkJob();
 
 const bootOverlayLock = (): void => {
   const active = overlayActiveClass(OVERLAY_ID);
@@ -26,65 +84,102 @@ const bootOverlayLock = (): void => {
   (document.head || document.documentElement).appendChild(style);
 };
 
-const mountUi = (status = 'Getting things ready…'): FullPageOverlay => {
+const stopPulse = (): void => {
+  if (pulseTimer == null) return;
+  clearInterval(pulseTimer);
+  pulseTimer = null;
+};
+
+const paintPulse = (): void => {
+  ui?.setStatus(`${statusBase}${'.'.repeat(pulseDots + 1)}`);
+};
+
+const startPulse = (base: string): void => {
+  stopPulse();
+  statusBase = base;
+  pulseDots = 0;
+  paintPulse();
+  pulseTimer = window.setInterval(() => {
+    pulseDots = (pulseDots + 1) % 3;
+    paintPulse();
+  }, PULSE_MS);
+};
+
+const show = (stage: Stage, error: string | null = null): FullPageOverlay => {
   bootOverlayLock();
+  const note = { lead: stage.lead ?? LEAD, detail: stage.detail };
   if (ui) {
-    ui.setNote(NOTE);
-    ui.setStatus(status);
-    ui.setError(null);
-    return ui;
+    ui.setNote(note);
+    ui.setError(error);
+  } else {
+    ui = createFullPageOverlay({
+      id: OVERLAY_ID,
+      brand: 'Skip Wait',
+      note,
+      status: stage.status,
+    });
+    if (error) ui.setError(error);
   }
-  ui = createFullPageOverlay({
-    id: OVERLAY_ID,
-    brand: 'Skip Wait',
-    note: NOTE,
-    status,
-    countdownLabel: 'Your link opens in',
-  });
+  if (error != null || stage.pulse === false) {
+    stopPulse();
+    ui.setStatus(stage.status);
+  } else {
+    startPulse(stage.status);
+  }
   return ui;
 };
 
-const waitCsrf = async (): Promise<string> => {
+const waitUnlock = async (): Promise<{ job: OneShortlinkJob; token: string }> => {
   const end = Date.now() + 8000;
   while (Date.now() < end) {
-    const t = csrfFromPage();
-    if (t) return t;
+    const fromPage = unlockFromPage();
+    const token = fromPage?.token?.trim() || csrfFromPage();
+    if (fromPage && token) return { job: fromPage.job, token };
     await new Promise((r) => setTimeout(r, 50));
   }
-  throw new Error('1shortlink csrf');
+  throw new Error('1shortlink unlock');
 };
 
 const runUnlock = async (): Promise<void> => {
-  const job = oneShortlinkJob();
-  if (!job) throw new Error('1shortlink job');
-  const overlay = mountUi('Unlocking your link…');
-  const token = await waitCsrf();
-  const redirectUrl = await postGetLinkDownload(job, token);
-  overlay.setStatus('Opening your link…');
+  if (isFullPagesPath() && !unlockFromPage()) {
+    show(STAGE.openGate);
+    const next = await resolveFullPagesRedirect();
+    if (next) {
+      location.replace(next);
+      return;
+    }
+  }
+  show(STAGE.prepare);
+  const { job, token } = await waitUnlock();
+  show(STAGE.unlock);
+  const { redirectUrl, shortenerId } = await postGetLinkDownload(job, token);
+  if (shortenerId) {
+    show(STAGE.continue);
+    await postCheckClick(shortenerId, token);
+  }
+  show(STAGE.open);
   recordBypassSuccess();
   location.replace(redirectUrl);
 };
 
 const kick = (): void => {
-  if (started || !oneShortlinkJob()) return;
-  const password = document.getElementById('password-area');
-  if (password && !password.hasAttribute('hidden')) {
-    mountUi().setError('This link needs a password.');
+  if (started || !isGatePage()) return;
+  if (passwordRequired()) {
+    show(STAGE.password);
     return;
   }
   started = true;
   void runUnlock().catch(() => {
-    mountUi().setError('Unlock failed. Reload and try again.');
+    started = false;
+    show(STAGE.failed, 'Reload this tab and try again.');
   });
 };
 
 export function init1shortlinkRedirect(): void {
-  if (window !== window.top) return;
-  if (!oneShortlinkJob()) return;
+  if (window !== window.top || !isGatePage()) return;
   void canBypass('oneshortlink').then((ok) => {
     if (!ok) return;
-    bootOverlayLock();
-    mountUi('Getting things ready…');
+    show(STAGE.ready);
     whenDomParsed(kick);
     const mo = new MutationObserver(() => {
       kick();
