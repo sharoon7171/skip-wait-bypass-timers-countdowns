@@ -36,6 +36,7 @@ import { initDevuploadsHoldNav, initDevuploadsResolve } from '../sites/devupload
 import { initDuploadHoldNav, initDuploadResolve } from '../sites/dupload';
 import { initStreamerviewerbotMainWorldInject } from '../sites/streamerviewerbot';
 import { initWorkinkMainWorldInject } from '../sites/workink';
+import { initXfreeMainWorldInject } from '../sites/xfree';
 import { initVexfileMainWorldInject } from '../sites/vexfile';
 import { initDlsurfMainWorldInject } from '../sites/dlsurf';
 import { initAlpharedeBackground } from '../sites/alpharede';
@@ -75,6 +76,7 @@ initCutyQuickRedirect();
 initStorylineScormMainWorldInject();
 initStreamerviewerbotMainWorldInject();
 initWorkinkMainWorldInject();
+initXfreeMainWorldInject();
 initOceanofgamesResolve();
 initGapkmodResolve();
 initGetmodsapkMainWorldInject();
