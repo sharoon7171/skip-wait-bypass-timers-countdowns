@@ -10,35 +10,134 @@ const CAPTCHA_PIN_STYLE_ID = 'skip-wait-exeio-captcha-pin';
 const CAPTCHA_WIDGET_ID = 'captchaShortlink';
 const TURNSTILE = '[name="cf-turnstile-response"]';
 const TURNSTILE_FRAMES = ['iframe[src*="challenges.cloudflare.com"]', 'iframe[src*="turnstile"]'] as const;
+const PULSE_MS = 450;
+const LEAD = 'Unlocking your link.';
 
-const NOTE = {
-  lead: 'Hang tight — unlocking your link.',
-  detail: "You don't need to tap anything on the page.",
-} as const;
+type Stage = {
+  lead?: string;
+  detail: string;
+  status: string;
+  pulse?: boolean;
+};
 
-const CAPTCHA_NOTE = {
-  lead: 'Confirm you’re human.',
-  detail: 'Complete the Turnstile check below. We’ll continue automatically when it’s done.',
-} as const;
+const STAGE = {
+  ready: {
+    detail: 'Skip Wait runs Continue, captcha, and Get Link on this page.',
+    status: 'Getting things ready',
+  },
+  adblock: {
+    detail: 'Clearing the adblock warning so the gate can continue.',
+    status: 'Clearing adblock gate',
+  },
+  continue: {
+    detail: 'Skipping the first Continue step for you.',
+    status: 'Skipping Continue',
+  },
+  captchaWait: {
+    lead: 'Confirm you’re human.',
+    detail: 'Complete the check below. Skip Wait continues when it is done.',
+    status: 'Waiting for captcha',
+  },
+  captchaLoad: {
+    lead: 'Confirm you’re human.',
+    detail: 'Complete the check below. Skip Wait continues when it is done.',
+    status: 'Loading captcha',
+  },
+  captchaAct: {
+    lead: 'Confirm you’re human.',
+    detail: 'Complete the check below. Skip Wait continues when it is done.',
+    status: 'Complete the captcha below',
+    pulse: false,
+  },
+  captchaOk: {
+    detail: 'Captcha passed. Moving to the next step.',
+    status: 'Captcha verified',
+  },
+  captchaSubmit: {
+    detail: 'Submitting the captcha step.',
+    status: 'Submitting captcha',
+  },
+  goWait: {
+    detail: 'Waiting out the Get Link timer this page still enforces.',
+    status: 'Waiting for Get Link',
+    pulse: false,
+  },
+  goOpen: {
+    detail: 'Opening your destination.',
+    status: 'Opening your link',
+  },
+} as const satisfies Record<string, Stage>;
 
 type Phase = 'before' | 'link' | 'go';
 type PinPhase = { stopPin: (() => void) | null };
 
 let ui: FullPageOverlay | null = null;
 let started = false;
+let pulseTimer: number | null = null;
+let pulseDots = 0;
+let statusBase = '';
 
 const msg = (type: string): void => {
   chrome.runtime.sendMessage({ type }).catch(() => {});
 };
 
-const mountUi = (note: typeof NOTE | typeof CAPTCHA_NOTE = NOTE, status = 'Getting things ready…'): FullPageOverlay => {
+const stopPulse = (): void => {
+  if (pulseTimer == null) return;
+  clearInterval(pulseTimer);
+  pulseTimer = null;
+};
+
+const paintPulse = (): void => {
+  ui?.setStatus(`${statusBase}${'.'.repeat(pulseDots + 1)}`);
+};
+
+const startPulse = (base: string): void => {
+  stopPulse();
+  statusBase = base;
+  pulseDots = 0;
+  paintPulse();
+  pulseTimer = window.setInterval(() => {
+    pulseDots = (pulseDots + 1) % 3;
+    paintPulse();
+  }, PULSE_MS);
+};
+
+const show = (stage: Stage, error: string | null = null): FullPageOverlay => {
+  const note = { lead: stage.lead ?? LEAD, detail: stage.detail };
   if (ui) {
     ui.setNote(note);
-    ui.setStatus(status);
-    return ui;
+    ui.setError(error);
+  } else {
+    ui = createFullPageOverlay({
+      id: OVERLAY_ID,
+      brand: 'Skip Wait',
+      note,
+      status: stage.status,
+      countdownLabel: 'Get Link ready in',
+    });
+    if (error) ui.setError(error);
   }
-  ui = createFullPageOverlay({ id: OVERLAY_ID, brand: 'Skip Wait', note, status, countdownLabel: 'Continue in' });
+  if (error != null || stage.pulse === false) {
+    stopPulse();
+    ui.setStatus(stage.status);
+  } else {
+    startPulse(stage.status);
+  }
   return ui;
+};
+
+const fail = (detail: string): void => {
+  stopPulse();
+  ui?.hideCountdown();
+  show(
+    {
+      lead: 'Unlock did not finish.',
+      detail,
+      status: 'Something went wrong',
+      pulse: false,
+    },
+    'Reload this tab and try again.',
+  );
 };
 
 const nativeSubmit = (form: HTMLFormElement): void => {
@@ -112,12 +211,12 @@ const goCountdownEndAt = (): number => {
   return Date.now() + (Number.isFinite(sec) ? sec : 6) * 1000 + 500;
 };
 
-async function runBeforeCaptcha(overlay: FullPageOverlay): Promise<void> {
+async function runBeforeCaptcha(): Promise<void> {
   let form = document.getElementById('before-captcha') as HTMLFormElement | null;
   if (!(form instanceof HTMLFormElement)) return;
 
   if (form.querySelector('.button.disabled.danger') && !form.querySelector('[name=f_n]')) {
-    overlay.setStatus('Bypassing adblock gate…');
+    show(STAGE.adblock);
     msg(MSG_EXEIO_ADBLOCK);
     await whenDomReady(() => {
       const f = document.getElementById('before-captcha');
@@ -125,20 +224,19 @@ async function runBeforeCaptcha(overlay: FullPageOverlay): Promise<void> {
     });
     form = document.getElementById('before-captcha') as HTMLFormElement | null;
     if (!(form instanceof HTMLFormElement)) {
-      overlay.setError('Adblock gate still active. Reload and try again.');
+      fail('The adblock warning is still blocking Continue.');
       return;
     }
   }
 
   if (!form.querySelector('[name=_csrfToken]')) {
-    overlay.setError('Continue gate not ready. Reload and try again.');
+    fail('The Continue gate was not ready.');
     return;
   }
 
   const fn = form.querySelector<HTMLInputElement>('[name=f_n]');
   if (fn) fn.value = 'sle';
-  overlay.setNote(NOTE);
-  overlay.setStatus('Skipping continue gate…');
+  show(STAGE.continue);
   nativeSubmit(form);
 }
 
@@ -161,13 +259,13 @@ function runLinkViewCaptcha(overlay: FullPageOverlay): Promise<string | null> {
       if (done) return;
       const token = turnstileToken(document);
       if (token && document.getElementById('link-view')) {
-        overlay.setStatus('Captcha verified…');
+        show(STAGE.captchaOk);
         finish(token);
         return;
       }
       const form = document.getElementById('link-view');
       if (!form && document.querySelector('.button.disabled.danger')) {
-        overlay.setStatus('Bypassing adblock gate…');
+        show(STAGE.adblock);
         msg(MSG_EXEIO_ADBLOCK);
         return;
       }
@@ -183,8 +281,8 @@ function runLinkViewCaptcha(overlay: FullPageOverlay): Promise<string | null> {
           styleId: CAPTCHA_PIN_STYLE_ID,
           alsoVisibleSelectors: TURNSTILE_FRAMES,
         });
-        overlay.setStatus(
-          TURNSTILE_FRAMES.some((s) => form.querySelector(s)) ? 'Complete the captcha below.' : 'Loading captcha…',
+        show(
+          TURNSTILE_FRAMES.some((s) => form.querySelector(s)) ? STAGE.captchaAct : STAGE.captchaLoad,
         );
       }
     };
@@ -199,17 +297,16 @@ async function runLinkView(overlay: FullPageOverlay): Promise<void> {
   if (!document.getElementById('link-view') && !document.querySelector('.link-container .button.disabled.danger')) {
     return;
   }
-  overlay.setNote(CAPTCHA_NOTE);
-  overlay.setStatus('Waiting for captcha…');
+  show(STAGE.captchaWait);
   msg(MSG_EXEIO_ADBLOCK);
   const token = await runLinkViewCaptcha(overlay);
   if (!token) {
-    overlay.setError('Turnstile was not completed. Finish the check above.');
+    fail('The captcha was not completed.');
     return;
   }
   const form = document.getElementById('link-view');
   if (!(form instanceof HTMLFormElement)) {
-    overlay.setError('Captcha form was removed. Reload and try again.');
+    fail('The captcha form was removed.');
     return;
   }
   const fn = form.querySelector<HTMLInputElement>('[name=f_n]');
@@ -222,8 +319,7 @@ async function runLinkView(overlay: FullPageOverlay): Promise<void> {
     form.appendChild(input);
   }
   input.value = token;
-  overlay.setNote(NOTE);
-  overlay.setStatus('Submitting captcha…');
+  show(STAGE.captchaSubmit);
   nativeSubmit(form);
 }
 
@@ -231,45 +327,43 @@ async function runGoLink(overlay: FullPageOverlay): Promise<void> {
   const form = document.getElementById('go-link');
   if (!(form instanceof HTMLFormElement) || !form.querySelector('[name=ad_form_data]')) return;
 
-  overlay.setNote(NOTE);
   msg('INJECT_VISIBILITY_SPOOF');
   msg(MSG_EXEIO_ADBLOCK);
-  overlay.setStatus('Waiting for unlock…');
+  show(STAGE.goWait);
   overlay.startCountdown(goCountdownEndAt());
   await waitForGoSubmit();
   overlay.hideCountdown();
 
   if (!document.getElementById('go-link')?.querySelector('[name=ad_form_data]')) {
-    overlay.setError('Unlock form was removed. Reload and try again.');
+    fail('The Get Link form was removed.');
     return;
   }
 
-  overlay.setStatus('Posting /links/go…');
+  show(STAGE.goOpen);
   const res = await requestGoUnlock();
   if (!res.ok) {
-    overlay.setError(res.err ?? 'Unlock failed.');
+    fail(res.err ?? 'Get Link unlock failed.');
     return;
   }
   recordBypassSuccess();
 }
 
 async function runPipeline(): Promise<void> {
+  const step = phase();
+  if (!step) return;
   msg(MSG_EXEIO_ADBLOCK);
   msg('INJECT_VISIBILITY_SPOOF');
-  const overlay = mountUi();
-  if (!phase()) await whenDomReady(() => !!phase());
-  switch (phase()) {
+  show(STAGE.ready);
+  switch (step) {
     case 'before':
-      await runBeforeCaptcha(overlay);
+      await runBeforeCaptcha();
       break;
     case 'link':
-      await runLinkView(overlay);
+      await runLinkView(ui!);
       break;
     case 'go':
-      await runGoLink(overlay);
+      await runGoLink(ui!);
       break;
-    default:
-      overlay.setError('exe.io gate not found on this page.');
   }
 }
 
@@ -277,7 +371,27 @@ export function initExeioGate(): void {
   if (window !== window.top || started) return;
   void canBypass('exeio').then((ok) => {
     if (!ok || started) return;
-    started = true;
-    void runPipeline();
+
+    const kick = (): boolean => {
+      if (started || !phase()) return false;
+      started = true;
+      void runPipeline();
+      return true;
+    };
+
+    if (kick()) return;
+
+    const mo = new MutationObserver(() => {
+      if (kick()) mo.disconnect();
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+
+    const stopWatch = (): void => {
+      window.setTimeout(() => {
+        if (!started) mo.disconnect();
+      }, 8000);
+    };
+    if (document.readyState === 'complete') stopWatch();
+    else window.addEventListener('load', stopWatch, { once: true });
   });
 }
