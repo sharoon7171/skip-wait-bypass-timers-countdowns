@@ -1,6 +1,7 @@
 import { canBypass } from '../../gate';
 import { createFullPageOverlay, type FullPageOverlay } from '../../injected-ui/full-page-overlay';
 import { buildFullPageOverlayCss, overlayActiveClass } from '../../injected-ui/overlay-styles';
+import { ADBLOCK_DETAIL } from './overlay';
 import { prepClientChecks, requestVisibilitySpoof } from './prep';
 
 const OVERLAY_ID = 'skip-wait-shrinkearn-mediator';
@@ -8,7 +9,7 @@ const HOP_IDS = ['go_d2', 'getmylink', 'nextpage'] as const;
 const HOP_KEYS = ['token', 'alias', 'c_d', 'c_t', 'url'] as const;
 const NOTE = {
   lead: 'Skipping the wait pages.',
-  detail: "You don't need to tap anything on the page.",
+  detail: ADBLOCK_DETAIL,
 } as const;
 
 let ui: FullPageOverlay | null = null;
