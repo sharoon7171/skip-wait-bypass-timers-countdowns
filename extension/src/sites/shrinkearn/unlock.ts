@@ -2,7 +2,7 @@ import { linksGoFormFromHtml, postLinksGo } from '../adlinkfly/unlock';
 import { recordBypassSuccess } from '../../free-bypass';
 import { canBypass } from '../../gate';
 import { ERROR_STATUS, GET_LINK_SEL, SITE, UNLOCK_WAIT_MS, isAliasPage } from './hosts';
-import { overlay } from './overlay';
+import { ADBLOCK_DETAIL, overlay } from './overlay';
 import {
   isCaptchaGate,
   isUnlockShell,
@@ -15,17 +15,17 @@ import { prepClientChecks, requestVisibilitySpoof } from './prep';
 
 const CAPTCHA_NOTE = {
   lead: 'Confirm you’re human.',
-  detail: 'Complete the check below. Skip Wait continues when you’re done.',
+  detail: `Complete the check below. ${ADBLOCK_DETAIL}`,
 } as const;
 
 const UNLOCK_NOTE = {
   lead: 'Unlocking your link.',
-  detail: "Skip Wait is finishing the Get Link step for you. You don't need to tap anything.",
+  detail: ADBLOCK_DETAIL,
 } as const;
 
 const CONTINUE_NOTE = {
   lead: 'Skipping the wait pages.',
-  detail: "You don't need to tap anything on the page.",
+  detail: ADBLOCK_DETAIL,
 } as const;
 
 const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
