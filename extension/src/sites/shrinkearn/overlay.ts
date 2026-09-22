@@ -11,6 +11,9 @@ import { OVERLAY_ID } from './hosts';
 
 type Note = { lead: string; detail: string };
 
+export const ADBLOCK_DETAIL =
+  'Disable your adblocker for this site, then reload if needed. We will fix this soon.';
+
 const cl = overlayClasses;
 const COUNTDOWN_LABEL = 'Your link opens in';
 const uiCss =
