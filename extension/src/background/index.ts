@@ -32,7 +32,8 @@ import { initFuzyapkMainWorldInject } from '../sites/fuzyapk';
 import { initModdroidMainWorldInject } from '../sites/moddroid';
 import { initModded1MainWorldInject } from '../sites/modded-1';
 import { initModsmaniacMainWorldInject } from '../sites/modsmaniac';
-import { initDevuploadsHoldNav, initDevuploadsResolve } from '../sites/devuploads';
+// DevUploads off — site gate changed; bypass not working yet
+// import { initDevuploadsHoldNav, initDevuploadsResolve } from '../sites/devuploads';
 import { initDuploadHoldNav, initDuploadResolve } from '../sites/dupload';
 import { initStreamerviewerbotMainWorldInject } from '../sites/streamerviewerbot';
 import { initWorkinkMainWorldInject } from '../sites/workink';
@@ -86,8 +87,9 @@ initFuzyapkMainWorldInject();
 initModdroidMainWorldInject();
 initModded1MainWorldInject();
 initModsmaniacMainWorldInject();
-initDevuploadsHoldNav();
-initDevuploadsResolve();
+// DevUploads off — site gate changed; bypass not working yet
+// initDevuploadsHoldNav();
+// initDevuploadsResolve();
 initDuploadHoldNav();
 initDuploadResolve();
 initVexfileMainWorldInject();

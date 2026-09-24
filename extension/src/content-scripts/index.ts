@@ -97,7 +97,8 @@ import {
 } from '../sites/sub4unlock';
 import { initDroplinkUnlock } from '../sites/droplink';
 import { initDlsurfUnlock } from '../sites/dlsurf';
-import { initDevuploadsBypass } from '../sites/devuploads';
+// DevUploads off — site gate changed; bypass not working yet
+// import { initDevuploadsBypass } from '../sites/devuploads';
 import { initDuploadBypass } from '../sites/dupload';
 import { initFreedlinkGate } from '../sites/freedlink';
 import { initEarn4linkMediator, initEarn4linkUnlock } from '../sites/earn4link';
@@ -293,7 +294,8 @@ const INITS = [
   initSub4unlockMeUnlock,
   initDroplinkUnlock,
   initDlsurfUnlock,
-  initDevuploadsBypass,
+  // DevUploads off — site gate changed; bypass not working yet
+  // initDevuploadsBypass,
   initDuploadBypass,
   initFreedlinkGate,
   initEarn4linkMediator,
