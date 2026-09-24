@@ -111,7 +111,9 @@ const continueTargets = (html: string, base: string, unlockUrl: string): string[
   if (alias) {
     const esc = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const hostEsc = unlockHost.replace(/\./g, '\\.');
-    for (const m of html.matchAll(new RegExp(`href=["']([^"']*[?&](?:dsp|grey|isp)=${esc}[^"']*)["']`, 'gi'))) {
+    for (const m of html.matchAll(
+      new RegExp(`href=["']([^"']*[?&](?:dsp|grey|isp|raja|runner)=${esc}[^"']*)["']`, 'gi'),
+    )) {
       take(m[1]);
     }
     for (const m of html.matchAll(
