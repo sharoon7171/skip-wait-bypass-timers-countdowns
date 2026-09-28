@@ -425,6 +425,9 @@
   "linkjust": {
     "hosts": ["linkjust.com"]
   },
+  "linksflys": {
+    "hosts": ["blog.linksflys.com", "linksflys.com"]
+  },
   "link4sub": {
     "hosts": [
       "blog.tapvietcode.com",
