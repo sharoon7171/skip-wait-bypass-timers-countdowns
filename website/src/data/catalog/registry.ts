@@ -61,6 +61,7 @@ import { bypass as kotakanimeidBypass } from './bypasses/kotakanimeid-bypass';
 import { bypass as linclikBypass } from './bypasses/linclik-bypass';
 import { bypass as link4subBypass } from './bypasses/link4sub-bypass';
 import { bypass as linknextShorteIoBypass } from './bypasses/linknext-shorte-io-bypass';
+import { bypass as linksflysBypass } from './bypasses/linksflys-bypass';
 import { bypass as linkshortifyBypass } from './bypasses/linkshortify-bypass';
 import { bypass as linksterrBypass } from './bypasses/linksterr-bypass';
 import { bypass as linkunlockerBypass } from './bypasses/linkunlocker-bypass';
@@ -211,6 +212,7 @@ export const bypasses: readonly SupportedBypass[] = [
   linclikBypass,
   link4subBypass,
   linknextShorteIoBypass,
+  linksflysBypass,
   linkshortifyBypass,
   linksterrBypass,
   linkunlockerBypass,
