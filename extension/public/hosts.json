@@ -45,6 +45,7 @@
     "hosts": [
       "1vegamovies.cc",
       "1vegamovies.cfd",
+      "1vegamovies.lat",
       "1vegamovies.me",
       "1vegamovies.tw"
     ]
@@ -52,8 +53,9 @@
   "vegamovies-landing": {
     "hosts": [
       "vglist.fit",
-      "vglist.top",
-      "vglist.nl"
+      "vglist.lol",
+      "vglist.nl",
+      "vglist.top"
     ]
   },
   "vexfile": {
@@ -98,6 +100,7 @@
     "hosts": [
       "stream.testuk.org",
       "rarestudy.in",
+      "rarestudy.testuk.org",
       "samfygros.com"
     ]
   },
