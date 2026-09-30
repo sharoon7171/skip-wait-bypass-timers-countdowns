@@ -5,7 +5,7 @@ const name = 'Cinefreak Mediator';
 const bypassType = 'Skip Waiting Page';
 
 const description =
-  'Cinefreak mediator bypass skips the generate-page timer, adblock warning, and two-step verify flow so movie downloads open on the file host right away.';
+  'Skip Wait, a Chrome extension that clears Cinefreak generate-page timers and verify clicks so the movie file host opens without the waiting-page ritual.';
 
 const domains = [
   'cinefreak.net',
@@ -21,6 +21,7 @@ const keywords = [
   'cinefreak timer bypass',
   'cinefreak adblock bypass',
   'cinefreak download bypass',
+  'cinefreak generate page bypass',
   'skip waiting page',
   'skip countdown timer',
   'bypass countdown timer',
@@ -28,56 +29,60 @@ const keywords = [
   'waiting page bypass',
   'verify download bypass',
   'skip wait extension',
-  'link shortener bypass',
 ] as const;
 
 const intro =
-  'Cinefreak download links often stop on a securing-your-connection page with a countdown, an adblock warning, and a two-step verify button before the file host opens. Skip Wait is the Chrome extension that clears that mediator hop so you are not stuck on please-wait and disable-adblock loops.';
+  'Cinefreak shares often open a Securing Your Connection generate page: a short countdown, an adblock warning, and two verify clicks before the file host. Skip Wait takes the unlock path already present on that page and opens the download destination so you are not stuck repeating the timer and verify loop.';
 
-const body = `## Generate pages that block the file twice
+const body = `## What the generate page adds
 
-Shared Cinefreak movie links do not go straight to the host. They land on a generate step that runs a visible countdown, asks you to verify download, and may flash an adblock or VPN warning even when your setup is fine. Close the tab or miss the second click and the whole Cinefreak waiting page ritual starts again.
+Movie links from Cinefreak do not land on the file host first. They load generate.php, which runs a visible security countdown, may show a blocker warning, and only then reveals Verify Download. A second Get Download Link click is required after that. Social popups can appear between those steps.
 
-That layer sits between the movie listing and the actual file. The page is built to keep you on-site through timers and verification—not to hand you the download in one tap.
+The wait is intentional. Closing the tab early or failing the adblock check sends you back through the same countdown and buttons.
 
-### Stages that slow every share
+### What you see before the file host
 
-- Five-second security countdown before any button appears
-- Adblock or Private DNS warnings that hide the download controls
-- Verify download, then a second get-download-link click
-- Popup prompts tied to social channels between steps
+- A five-second countdown with rotating status text
+- An adblock, Brave Shields, Private DNS, or VPN warning that hides the download button
+- Verify Download as the first click
+- Get Download Link as the second click
+- Occasional Facebook or Telegram popups between steps
 
-## Opening the file host inside Chrome
+## How Skip Wait clears that gate
 
-Skip Wait runs on supported Cinefreak mediator pages when the generate link loads. It reads the encoded destination already in the URL and sends you to the file host immediately—no countdown babysitting, no turning adblock off, no hunting verify buttons under overlays.
+On supported Cinefreak generate pages, Skip Wait reads the unlock destination the page already embeds for the final click, then opens it. That path sends you through to the file host without sitting through the countdown, dismissing blocker warnings, or pressing verify twice.
 
-That is a Cinefreak timer bypass and waiting page bypass in one step: the extension handles the mediator hop in Chrome instead of asking you to paste the link somewhere else. If the share uses a mirror domain from the supported list, the same path applies without relearning a new interstitial layout.
+You stay in Chrome. There is no separate paste box and no need to disable your adblocker just to reveal the on-page button.
 
-## Mirrors and the same generate flow
+## Same flow on mirror domains
 
-Cinefreak rotates mirror domains when the main site is down. The generate.php pattern—the countdown, verify flow, and encoded file link—is the same across those mirrors. Skip Wait targets that shared mediator shape so a new mirror does not mean another manual routine as long as it stays on the supported list.
+When the main Cinefreak site is down, mirrors use the same generate.php layout: countdown, blocker check, and two-step verify. Skip Wait follows that shared pattern on every listed domain, so a mirror swap does not mean a new manual routine.
+
+1. Open the Cinefreak generate link on a supported domain.
+2. Skip Wait detects the generate page and takes the unlock destination from the page.
+3. The file host loads so you can start the download.
 `;
 
 const faq: readonly BypassFaq[] = [
   {
-    question: 'What does a Cinefreak mediator bypass skip?',
+    question: 'What does the Cinefreak mediator bypass skip?',
     answer:
-      'The generate-page countdown, adblock warning screen, and two-step verify download flow before the file host opens.',
+      'The generate-page countdown, the adblock or network warning screen, and the two verify clicks before the file host opens.',
   },
   {
-    question: 'Do I need to disable my adblocker?',
+    question: 'Do I need to turn off my adblocker on Cinefreak?',
     answer:
-      'On supported generate pages, no. Skip Wait moves past that gate and opens the encoded download destination without the on-page adblock check.',
+      'On supported generate pages, no. Skip Wait uses the unlock path already on the page, so the on-page adblock check does not block you.',
   },
   {
-    question: 'Do I still click Verify Download?',
+    question: 'Do I still need to click Verify Download?',
     answer:
-      'On supported pages, no. The extension completes the mediator hop so you are not pressing verify twice per file.',
+      'On supported pages, no. Skip Wait completes the mediator step so you are not pressing verify and get-download-link for each file.',
   },
   {
-    question: 'Does this work on Cinefreak mirror domains?',
+    question: 'Will this work if Cinefreak sends me to a mirror?',
     answer:
-      'Yes on the listed mirror domains that use the same generate.php mediator. Domains outside that list are not covered until added.',
+      'Yes when the mirror is on the supported list and still uses the same generate.php waiting page. Domains outside that list are not covered until they are added.',
   },
 ];
 
