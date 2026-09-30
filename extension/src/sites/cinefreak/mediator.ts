@@ -7,7 +7,7 @@ import { CINEFREAK_MEDIATOR_PATH } from './hosts';
 
 const OVERLAY_ID = 'skip-wait-cinefreak-mediator';
 const BOOT_STYLE_ID = 'skip-wait-cinefreak-mediator-boot';
-const REDIRECT_RE = /window\.location\.href\s*=\s*"(https?:\/\/[^"]+)"/;
+const REDIRECT_RE = /window\.location\.href\s*=\s*"([^"]+)"/;
 const OVERLAY_MIN_MS = 200;
 const NOTE = {
   lead: 'Hang tight — opening your download.',
@@ -45,27 +45,20 @@ const mountUi = (status: string): FullPageOverlay => {
   return ui;
 };
 
-function destinationFromId(): string | null {
-  const id = new URLSearchParams(location.search).get('id');
-  if (!id) return null;
-  try {
-    const pad = id.replace(/-/g, '+').replace(/_/g, '/');
-    const raw = atob(pad + '='.repeat((4 - (pad.length % 4)) % 4));
-    const file = raw.match(/^(https:\/\/[^/]+\/f\/[a-f0-9]+)/i);
-    if (file?.[1]) return file[1];
-    const url = raw.match(/^(https:\/\/[^\s"']+)/i);
-    return url?.[1] ?? null;
-  } catch {
-    return null;
-  }
+function unescapeJsString(raw: string): string {
+  return raw.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16))).replace(/\\\//g, '/');
 }
 
 function destinationFromHtml(html: string): string | null {
-  return html.match(REDIRECT_RE)?.[1] ?? null;
-}
-
-function resolve(): string | null {
-  return destinationFromId() ?? destinationFromHtml(document.documentElement.innerHTML);
+  const raw = html.match(REDIRECT_RE)?.[1];
+  if (!raw) return null;
+  try {
+    const href = new URL(unescapeJsString(raw), location.href).href;
+    if (href === location.href) return null;
+    return href;
+  } catch {
+    return null;
+  }
 }
 
 function redirect(dest: string): void {
@@ -83,7 +76,7 @@ function redirect(dest: string): void {
 
 function jump(): void {
   if (started || !CINEFREAK_MEDIATOR_PATH.test(location.pathname)) return;
-  const dest = resolve();
+  const dest = destinationFromHtml(document.documentElement.innerHTML);
   if (!dest) return;
   started = true;
   redirect(dest);
