@@ -1,3 +1,5 @@
+import bundledHostsJson from '../../public/hosts.json';
+
 export const HOSTS_STORAGE_KEY = 'skipWaitHosts';
 export const HOSTS_UPDATED_AT_KEY = 'skipWaitHostsUpdatedAt';
 const HOSTS_URL =
@@ -47,23 +49,14 @@ const storeRefreshedHosts = async (parsed: HostsFile): Promise<void> => {
   await chrome.storage.local.set({ [HOSTS_STORAGE_KEY]: parsed, [HOSTS_UPDATED_AT_KEY]: Date.now() });
 };
 
-const loadBundledHosts = async (): Promise<HostsFile | null> => {
-  try {
-    const res = await fetch(chrome.runtime.getURL('hosts.json'));
-    if (!res.ok) return null;
-    return parseHosts(await res.json());
-  } catch {
-    return null;
-  }
-};
+const bundledHosts = parseHosts(bundledHostsJson);
 
 const loadRefreshedHosts = async (): Promise<HostsFile | null> => {
   const stored = await chrome.storage.local.get(HOSTS_STORAGE_KEY);
   return parseHosts(stored[HOSTS_STORAGE_KEY]);
 };
 
-const activeHosts = async (): Promise<HostsFile> =>
-  mergeHosts(await loadBundledHosts(), await loadRefreshedHosts());
+const activeHosts = async (): Promise<HostsFile> => mergeHosts(bundledHosts, await loadRefreshedHosts());
 
 export const pullHosts = async (): Promise<boolean> => {
   const res = await fetch(`${HOSTS_URL}?t=${Date.now()}`, { cache: 'no-store', credentials: 'omit' });
